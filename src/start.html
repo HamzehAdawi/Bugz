@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const dark = localStorage.getItem('theme-dark') === '1';
+    const themeColor = dark ? 'rgb(43, 42, 51)' : 'rgb(54, 184, 224)';
+    document.documentElement.style.setProperty('--theme-color', themeColor);
+  </script>
+
+  <link rel="stylesheet" href="../css/global-style.css" />
+  <link rel="stylesheet" href="../css/plot-style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap" rel="stylesheet">
+ 
+
+  <title>Start Plottn'</title>
+</head>
+<body>
+
+  <h1 id="plot-title"></h1>
+  <div id="right-plot-panel"></div>
+  <div id="left-plot-panel"></div>
+  <div id="bottom-plot-panel"></div>
+ 
+  <div id="garden-plot-container"></div>
+
+  <script src="../js/start-script.js"></script>
+  <script type="module" src="../js/script.js"></script>
+</body>
+</html>

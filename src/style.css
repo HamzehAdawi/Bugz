@@ -1,0 +1,303 @@
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-behavior: none;
+  overflow: hidden;
+  background-color: var(--theme-color);
+}
+
+#main-title {
+  color: rgb(60, 177, 93);
+  font-family: "Rubik Bubbles";
+  font-size: 6vw;
+  text-shadow: 2px 16px 1px rgb(59, 37, 26);
+  top: -6.5%;
+  left: 26%;
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.letter {
+  display: inline-block; 
+}
+
+#start-button {
+  position: absolute;
+  top: 500px;
+  left: 48%;
+  font-size: 2.5vw;
+}
+
+.green-button {
+  padding: 10px 20px;
+  font-size: 45px;
+  background-color: rgb(60, 177, 93);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Rockwell", sans-serif;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#plots-container {
+  position: absolute;
+  top: 19%;
+  height: 30vw;
+  width: 24vw;
+  border-radius: 10%;
+  background-color: rgba(53, 43, 17, 0.995);
+  border: 5px solid rgb(40, 128, 65);
+  display: none;
+  font-size: 33vw;
+  font-family: "Rubik Bubbles";
+  color: rgb(60, 177, 93);
+  border: solid 22px rgb(40, 128, 65);
+  overflow: hidden;
+  align-items: center;
+  padding-bottom: 1.2vw;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+  left: 38%;
+}
+
+#plots-grid {
+  display: grid;
+  gap: 3%;
+  justify-items: center;
+  align-items: center;
+  margin-top: 4%;
+}
+
+.plot {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  height: .5vh;
+  width: 18vw;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  background-color: rgb(43, 130, 68);
+  color: rgba(255, 255, 255, 0.531);
+  border-radius: 2%;
+  font-size: 40px;
+  font-family: "Rockwell", sans-serif;
+  overflow: hidden;
+  padding-bottom: 19%;
+  padding-left: 3%;
+}
+
+.plot-names {
+  font-size: 30px;
+  font-family: "Rockwell", sans-serif;
+  text-align: left;
+  justify-content: left;
+  position: relative;
+  width: 75%;
+  top: 280%;
+  font-size: .9em;
+  overflow: hidden;
+  color: rgba(245, 245, 245, 0.947);
+  background-color: #2b8244;
+  border: none;
+  outline: none;
+}
+
+#new-plot-button {
+  margin-right: 20px;
+  font-size: 4%;
+}
+
+#menu-button {
+  font-size: 4%;
+}
+
+#plots-title {
+  text-align: center;
+  width: 100%;
+  height: 0.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Rockwell", sans-serif;
+  color: rgb(255, 255, 255);
+  font-size: 55px;
+  padding-bottom: 20px;
+  user-select: none;
+}
+
+#sun {
+  position : absolute;
+  height: 17vh;
+  width: 10vw; 
+  top: 25px;
+  left: 25px;
+  pointer-events: none;
+  user-select: none;
+}
+
+#moon {
+  position : absolute;
+  height: 165px;
+  width: 250px; 
+  top: -160px;
+  left: 40px;
+  pointer-events: none;
+  user-select: none;
+}
+
+#cloud2 {
+  position : absolute;
+  right: right 1000px;
+  height: 50px;
+  width: 120px; 
+  top: 145px;
+  pointer-events: none;
+  user-select: none;
+}
+
+#cloud1 {
+  position : absolute;
+  height: 150px;
+  width: 350px;
+  top: 300px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.grass {
+  position: absolute;
+  width: 100%;      /* span the full window/parent width so repeat-x tiles across */
+  height: 10vh; 
+  pointer-events: none;
+  user-select: none;
+  bottom: 0;
+  left: 0;
+  background-repeat: repeat-x; /* now this applies to the background-image */
+  background-size: auto 100%;
+}
+
+
+.sunflowers {
+  height: 15vh;
+  width: 14vw;
+  bottom: -4px;
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+#sunflower2 {
+  right: 600px;
+}
+
+#sunflower3 {
+  left: 600px;
+}
+
+#theme-toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+}
+
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2b2a33ad;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px; 
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 94px;
+  height: 27px;
+  top: 5px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 30px;
+  left: 2.5px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 95%; 
+}
+
+input:checked + .slider {
+  background-color: #bebebe; 
+  width: 100px;
+  
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(21px);
+  -ms-transform: translateX(21px);
+  transform: translateX(62px); 
+  height: 24px;
+  width: 33px;
+  top: 2px;
+  background-color: #444; 
+  
+}
+
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+
+}
+
+#theme-toggle-icon {
+  height: 22px;
+  width: 22px;
+  position: absolute;
+  top: 7px;
+  left: 38px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 65%;
+}
+
+#garden {
+  color: rgb(60, 177, 93);
+  font-family: "Rubik Bubbles";
+  font-size: 115px;
+  text-shadow: 2px 16px 1px rgb(59, 37, 26);
+}
+
+#plot-select-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
