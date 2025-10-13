@@ -119,7 +119,7 @@ body {
 }
 
 #menu-button {
-  font-size: 4%;
+   font-size: 4.3%;
 }
 
 #plots-title {
@@ -177,13 +177,13 @@ body {
 
 .grass {
   position: absolute;
-  width: 100%;      /* span the full window/parent width so repeat-x tiles across */
+  width: 100%;     
   height: 10vh; 
   pointer-events: none;
   user-select: none;
   bottom: 0;
   left: 0;
-  background-repeat: repeat-x; /* now this applies to the background-image */
+  background-repeat: repeat-x; 
   background-size: auto 100%;
 }
 
@@ -300,4 +300,6 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 80%;
+  gap: 30px;
 }

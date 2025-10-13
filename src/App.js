@@ -17,8 +17,17 @@ function App() {
 
   return (
     <div className="App">
-      {view === 'menu' && <Menu onStart={() => setView('start')} dark={dark} setDark={setDark} />}
-      {view === 'start' && <StartPlot onBack={() => setView('menu')} dark={dark} setDark={setDark} />}
+      {view === 'menu' && 
+      <Menu 
+        onStart={() => setView('start')} 
+        dark={dark} 
+        setDark={setDark} />}
+      
+      {view === 'start' && 
+      <StartPlot 
+        onBack={() => setView('menu')} 
+        dark={dark} 
+        setDark={setDark} />}
     </div>
   );
 }

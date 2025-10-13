@@ -12,6 +12,8 @@ const Menu = ({ onStart, dark, setDark }) => {
   const cloudRefs = useRef([]);
   const sunRef = useRef(null);
   const moonRef = useRef(null);
+  const startButtonRef = useRef(null);
+  const hoverAnimationRef = useRef(null);
 
   useEffect(() => {
     // basic cloud animation using Web Animations API
@@ -48,6 +50,45 @@ const Menu = ({ onStart, dark, setDark }) => {
     }
   }, [dark]);
 
+  // start the wiggle animation immediately on first hover using refs
+  const startWiggle = () => {
+    const el = startButtonRef.current;
+    if (!el) return;
+    // avoid creating multiple animations
+    if (hoverAnimationRef.current) return;
+    hoverAnimationRef.current = el.animate(
+      [
+        { transform: 'rotate(5deg)' },
+        { transform: 'rotate(-5deg)' },
+        { transform: 'rotate(5deg)' },
+        { transform: 'rotate(-5deg)' },
+        { transform: 'rotate(0deg)' },
+      ],
+      {
+        duration: 700,
+        iterations: Infinity,
+        easing: 'ease-in-out',
+      }
+    );
+  };
+
+  const stopWiggle = () => {
+    if (hoverAnimationRef.current) {
+      hoverAnimationRef.current.cancel();
+      hoverAnimationRef.current = null;
+    }
+  };
+
+  // cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverAnimationRef.current) {
+        hoverAnimationRef.current.cancel();
+        hoverAnimationRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <div>
       {/* decorative images from public assets */}
@@ -72,17 +113,31 @@ const Menu = ({ onStart, dark, setDark }) => {
 
       <AnimatedTitle text="GardenPlotter" />
 
-      <button className="green-button" id="start-button" onClick={() => setShowPlots(true)}>
+    
+      <Grass />
+
+    
+      <button
+        className="green-button"
+        id="start-button"
+        ref={startButtonRef}
+        onClick={() => {
+          setShowPlots(true);
+        }}
+        onMouseEnter={startWiggle}
+        onMouseLeave={stopWiggle}
+      >
         Start
       </button>
+        
+     
 
-      <Grass className="grass-container" />
-
-      
-
-      <PlotsGrid onStart={onStart} visible={showPlots} />
+  <PlotsGrid onStart={onStart} visible={showPlots} onClose={() => setShowPlots(false)} />
     </div>
   );
+
+  
+
 };
 
 export default Menu;

@@ -2,7 +2,6 @@ function Grass() {
     return (
         <div
             className="grass"
-            // use inline backgroundImage so webpack/CRA resolves the asset
             style={{
                 backgroundImage: `url(${require('../assets/grass.png')})`,
                 backgroundRepeat: 'repeat-x',

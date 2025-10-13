@@ -6,8 +6,6 @@ body {
   align-items: center;
   scroll-behavior: none;
   overflow: hidden;
-  background-color: var(--theme-color);
-        /* background-image is in public/assets; remove from module CSS to avoid bundler path resolution. */
 }
 
 #garden-plot-container {
@@ -16,11 +14,12 @@ body {
     height: 70%;
     width: 79.3%;
     display: grid;
-    /* background-image is archived in public/assets. */
     background-repeat: repeat;
     border: 10px solid #221407ee;
     justify-content: center;
     align-items: center;
+    border-bottom: none;
+
 }
 
 #left-plot-panel {
@@ -32,11 +31,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #b91d1dd8;
-    color: red;
-    border-radius: 0 1% 1% 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
+    border-radius: 2px;
+
+    border-right: 9px solid #3a2109;
+    border-top: 0px solid #3a2109;
+    z-index: 1;
 }
 
 #right-plot-panel {
@@ -48,8 +47,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #441db9d8;
-    color: rgb(68, 0, 255);
     border-radius: 1% 0 0 1%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   
@@ -65,24 +62,107 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #1db961d8;
-    color: red;
     border-radius: 0 0 1% 1%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
 }
 
+#top-plot-panel {
+    position: absolute;
+    top: 0;
+    left: 10.45%;
+    height: 12.6%;
+    width: 79.6%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 1% 1%;
+    text-shadow: 2px 16px 1px rgb(59, 37, 26);
+    text-align: center;
+    background-color: var(--theme-color);
+    overflow: hidden;
+}
+
+#main-panel {
+    position: absolute;
+    top: 11.5%;
+    left: 10%;
+    right: 6%;
+    height: 69%;
+    width: 79.8%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #2e152ed8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+#plot-title-sign {
+    position: absolute;
+    height: 9vh;
+    width: 25vw;
+    align-items: center;
+    justify-content: center;
+    top: 3.2vh;
+    z-index: 2;
+    background-image: url(assets/plot-title-post.png);
+    background-repeat: no-repeat;
+    text-align: center;
+
+    
+}
 #plot-title {
     position: absolute;
-    top: 2%;
-    left: 50%;
+    color: rgb(60, 177, 93);
+    font-size: 3vw;
+    font-family: "Rubik Bubbles";
+    text-align: center;
+    z-index: 2;
+    text-shadow: none;
+    bottom: 2vh;
+    height: 19%;
+    width: 100%;
+    text-shadow: #000000 1px 3px 0;;
+}
 
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #ff0000;
-   
+#back-menu-button {
+    font-size: 1.4vw;
+    margin-top: 20px;
+    margin-right: 15px;
+    border-radius: 55%;
+}
+
+.panel-item-container {
+    width: 106%;
+    height: 12%;
+    text-align: center;
+    align-items: center;
+    border-top: none;
+    background-image: url(assets/plot-container-back.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    
+}
+
+#veggies-title {
+    font-size: 1.9vw;
     padding: 10px 20px;
+    font-family: "Tiny5", sans-serif;
+    text-align: center;
+    margin-top: 13%;
+    margin-left: 5%;
+    text-shadow: -1px 9px 2px #000000;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: #2f5500;
+}
 
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-
+.animated-bird {
+    position: relative;
+    top: 10%;
+    right: 40%;
+    width: 20%;
+    z-index: 1;
 }
