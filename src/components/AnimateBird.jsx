@@ -6,6 +6,7 @@ const AnimatedBird = ({ flapIntervalMs = 300 }) => {
 	useEffect(() => {
 		let cancelled = false;
 		let currentAnim = null;
+		let floatation = null;
 		const birdEl = document.getElementById("birdie");
 		if (!birdEl) return;
 
@@ -69,8 +70,10 @@ const AnimatedBird = ({ flapIntervalMs = 300 }) => {
 					}
 				);
 
+
 				try {
 					await currentAnim.finished;
+					
 				} catch {
 					break;
 				}

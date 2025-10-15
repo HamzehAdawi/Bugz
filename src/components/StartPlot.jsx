@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import '../plot-style.css';
 import PlotDecorations from './PlotDecorations';
 import AnimatedBird from './AnimateBird';
+import PlotPanelItem from './PlotPanelItem';
 
 const StartPlot = ({ onBack, dark, setDark }) => {
   const selectedPlotName = typeof window !== 'undefined' ? localStorage.getItem('selectedPlotName') : null;
@@ -12,7 +13,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
     <div 
       id="garden-plot-container"
       style={{
-        backgroundImage: `url(${require('../assets/plot-background.png')})`,
+        backgroundImage: `url(${require('../assets/background_img.png')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         width: '100%',
@@ -23,11 +24,18 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       }}
     >
       <div id="left-plot-panel">
-        <div className='panel-item-container' id='veggies-container'>
-          <h1 id='veggies-title'>
-          Veggies
-        </h1>
+
+        <div id='left-button-container'>
+          <button className="green-button" id='settings-button'>Settings</button>
         </div>
+        
+        <div id='plot-items-container'>
+          <PlotPanelItem title="Veggies" className="veggie-container" />
+          <PlotPanelItem title="Structs" className="structure-container" />
+          <PlotPanelItem title="Beds" className="structure-container" />
+        </div>
+        
+
       </div>
        <div id='top-plot-panel'>
 
@@ -58,8 +66,9 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         ref={mainRef}
         style={{
           backgroundImage: `url(${require('../assets/Empty-grass-plot.png')}) `,
-          border: '5px solid rgb(59, 37, 26)',
+          border: '#58481cff 5px solid',
           borderTop: 'none',
+
         }}
       ></div>
       
