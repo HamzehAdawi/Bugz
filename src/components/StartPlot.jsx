@@ -3,14 +3,14 @@ import '../plot-style.css';
 import PlotDecorations from './PlotDecorations';
 import AnimatedBird from './AnimateBird';
 import PlotPanelItem from './PlotPanelItem';
+import BugControls from './BugControls';
 
 const StartPlot = ({ onBack, dark, setDark }) => {
   const selectedPlotName = typeof window !== 'undefined' ? localStorage.getItem('selectedPlotName') : null;
   const mainRef = useRef(null);
 
   return (
-    
-    <div 
+    <div
       id="garden-plot-container"
       style={{
         backgroundImage: `url(${require('../assets/background_img.png')})`,
@@ -33,44 +33,43 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           <PlotPanelItem title="Veggies" className="veggie-container" />
           <PlotPanelItem title="Structs" className="structure-container" />
           <PlotPanelItem title="Beds" className="structure-container" />
+           <PlotPanelItem title="Misc." className="structure-container" />
         </div>
         
 
       </div>
-       <div id='top-plot-panel'>
-
-        <div id='plot-title-sign'>
-          <div>
-            <p id="plot-title">{selectedPlotName || 'My Plot'}</p>
-          </div>
-          
-
-        </div>
-        
+      
+      <div id='top-plot-panel'>
+  
         <div className="animated-bird">
           <img id="birdie" src={require('../assets/flying-birdie.png')} alt="bird"/>
-          <AnimatedBird />
+          <AnimatedBird birdId={"birdie"}/>
         </div>
-       </div>
+
+      </div>
            
 
       <PlotDecorations plotToDecorateRef={mainRef} />
 
       <div id="right-plot-panel">
-        <button className="green-button" id='back-menu-button' onClick={onBack}>Quit</button>
+        <div id='right-button-container'>
+          <button className="green-button" id='back-menu-button' onClick={onBack}>Quit</button>
+        </div>
+        
       </div>
 
       <div id="bottom-plot-panel"></div>
-       <div
-        id='main-panel'
-        ref={mainRef}
-        style={{
-          backgroundImage: `url(${require('../assets/Empty-grass-plot.png')}) `,
-          border: '#58481cff 5px solid',
-          borderTop: 'none',
-
-        }}
-      ></div>
+      
+      <div id='main-panel'>
+        <div id='grass-canvas' ref={mainRef}></div>
+        <div id='grass-flakes'></div>
+        <div id='dirt-canvas'>
+        <div id='bug-control-container'>
+          <BugControls />
+        </div>
+          
+        </div>
+      </div>
       
     </div>
   );
