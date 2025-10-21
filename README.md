@@ -1,3 +1,43 @@
+
+# BUGZ
+
+Garden Plotter is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
+
+# 🎮 Gameplay
+
+Move around the garden and eat other bugs to gain points.
+
+Watch out for larger predators — they’ll eat you!
+
+Each bug species has its own diet and behavior pattern.
+
+Collect bonuses, maintain your streak, and stay alive as long as possible.
+
+# 🧩 Features
+
+Dynamic diet system — each bug’s food chain is generated from an object list.
+
+Smooth sprite animations for movement and direction changes.
+
+Responsive layout with a simple, modular React structure.
+
+Expandable design for adding new bugs, diets, and bonuses.
+
+
+⚙️ Tech Stack
+
+React (UI + logic)
+
+JavaScript (ES6+)
+
+CSS Grid / Flexbox for layout
+
+Dynamic imports for sprite and diet images
+
+
+
+
+# For Contributing / Development
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
