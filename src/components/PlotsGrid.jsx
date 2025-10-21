@@ -94,7 +94,7 @@ const PlotsGrid = ({ onStart, visible = true, onClose }) => {
 
   function handleStart() {
     if (selectedIndex == null) {
-      showToast('Please select a plot.');
+      showToast('Please select a game.');
       return;
     }
 
@@ -118,7 +118,7 @@ const PlotsGrid = ({ onStart, visible = true, onClose }) => {
 
   return (
     <div ref={plotsContainerRef} id="plots-container" style={{ display: visible ? 'block' : 'none' }}>
-      <h1 id="plots-title">My Plots</h1>
+      <h1 id="plots-title">Game Saves</h1>
         <div id="plots-grid" ref={containerRef}>
           {[0, 1, 2, 3].map((i) => (
             <div
@@ -135,7 +135,7 @@ const PlotsGrid = ({ onStart, visible = true, onClose }) => {
             >
               <input
                 className="plot-names"
-                placeholder={`Empty Plot #${i + 1}`}
+                placeholder={`New Game #${i + 1}`}
                 value={names[i]}
                 onChange={(e) => handleNameChange(i, e.target.value)}
               />

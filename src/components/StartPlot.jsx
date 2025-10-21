@@ -4,10 +4,12 @@ import PlotDecorations from './PlotDecorations';
 import AnimatedBird from './AnimateBird';
 import PlotPanelItem from './PlotPanelItem';
 import BugControls from './BugControls';
+import {bugs} from '../data/bugs.js';
 
 const StartPlot = ({ onBack, dark, setDark }) => {
   const selectedPlotName = typeof window !== 'undefined' ? localStorage.getItem('selectedPlotName') : null;
   const mainRef = useRef(null);
+  const bug = "worm";
 
   return (
     <div
@@ -29,11 +31,27 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           <button className="green-button" id='settings-button'>Settings</button>
         </div>
         
+        
         <div id='plot-items-container'>
-          <PlotPanelItem title="Veggies" className="veggie-container" />
-          <PlotPanelItem title="Structs" className="structure-container" />
-          <PlotPanelItem title="Beds" className="structure-container" />
-           <PlotPanelItem title="Misc." className="structure-container" />
+          <PlotPanelItem title="Diet" className="veggie-container" />
+          <div>
+            {bugs.map((element, index) => (
+              <div key={index} className="diet-item">
+               { element.name === bug ? null: 
+                element.diet.map((dietItem, dietIndex) => (
+                  <img 
+                    src={require(`../assets/${dietItem}-diet.png`)}
+                    alt={dietItem}
+                      className="diet-images"
+                    />
+                ))}
+              </div> 
+            ))}
+
+          </div>
+          <PlotPanelItem title="Bonuses" className="structure-container" />
+          <PlotPanelItem title="Streak" className="structure-container" />
+           <PlotPanelItem title="Lives" className="structure-container" />
         </div>
         
 
