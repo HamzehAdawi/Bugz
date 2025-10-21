@@ -1,7 +1,7 @@
 
 # BUGZ
 
-Garden Plotter is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
+Bugz is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
 
 # 🎮 Gameplay
 
