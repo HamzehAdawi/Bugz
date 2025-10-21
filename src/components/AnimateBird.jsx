@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import wingUp from "../assets/flying-birdie-wing-up.png";
 import wingDown from "../assets/flying-birdie.png";
 
-const AnimatedBird = ({ flapIntervalMs = 300 }) => {
+const AnimatedBird = ({birdId, flapIntervalMs = 300 }) => {
 	useEffect(() => {
 		let cancelled = false;
 		let currentAnim = null;
-		let floatation = null;
 		const birdEl = document.getElementById("birdie");
 		if (!birdEl) return;
 
@@ -15,7 +14,7 @@ const AnimatedBird = ({ flapIntervalMs = 300 }) => {
 		let flapOn = false;
 
 		const imgEl =
-			birdEl.tagName === "IMG"
+			birdEl.tagName === "IMG" 
 				? birdEl
 				: birdEl.querySelector && birdEl.querySelector("img");
 		let flapInterval = null;
