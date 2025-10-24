@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import AnimatedTitle from './AnimatedTitle';
 import ThemeToggle from './ThemeToggle';
 import PlotsGrid from './PlotsGrid';
@@ -14,9 +14,10 @@ const Menu = ({ onStart, dark, setDark }) => {
   const moonRef = useRef(null);
   const startButtonRef = useRef(null);
   const hoverAnimationRef = useRef(null);
+  const title = useRef(null);
 
   useEffect(() => {
-    // basic cloud animation using Web Animations API
+
     const refs = cloudRefs.current || [];
     refs.forEach((el, index) => {
       if (!el) return;
@@ -36,7 +37,7 @@ const Menu = ({ onStart, dark, setDark }) => {
   }, []);
 
   useEffect(() => {
-    // sun/moon positioning when theme changes
+
     if (dark) {
       sunRef.current.style.transform = 'translateX(-280px)';
       sunRef.current.style.transitionDuration = '1200ms';
@@ -50,11 +51,10 @@ const Menu = ({ onStart, dark, setDark }) => {
     }
   }, [dark]);
 
-  // start the wiggle animation immediately on first hover using refs
   const startWiggle = () => {
     const el = startButtonRef.current;
     if (!el) return;
-    // avoid creating multiple animations
+
     if (hoverAnimationRef.current) return;
     hoverAnimationRef.current = el.animate(
       [
@@ -79,7 +79,7 @@ const Menu = ({ onStart, dark, setDark }) => {
     }
   };
 
-  // cleanup on unmount
+
   useEffect(() => {
     return () => {
       if (hoverAnimationRef.current) {
@@ -88,10 +88,9 @@ const Menu = ({ onStart, dark, setDark }) => {
       }
     };
   }, []);
-
+  
   return (
     <div>
-      {/* decorative images from public assets */}
       <img id="sun" ref={sunRef} className="sun" src={sunImg} alt="sun" />
       <img id="moon" ref={moonRef} className="moon" src={moonImg} alt="moon" />
       <img
@@ -111,7 +110,7 @@ const Menu = ({ onStart, dark, setDark }) => {
 
       <ThemeToggle dark={dark} setDark={setDark} />
 
-      <AnimatedTitle text="GardenPlotter" />
+      {!showPlots && <AnimatedTitle text="BUGZ" />}
 
     
       <Grass />

@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import "../plot-style.css";
 import worm from "../assets/worm.png";
-import wormAnim from "../assets/worm-anim.png";
 import { bugs } from "../data/bugs.js";
 
-const BugControls = () => {
+const BugControls = ({ isBugDisplay }) => {
   const bug = useRef(null);
   const spritesheet = useRef(null);
 
@@ -46,6 +45,7 @@ const BugControls = () => {
     }
 
     const handleMouseMove = (event) => {
+     
       const rect = bugContainer.getBoundingClientRect();
       const { width, height } = bugElement.getBoundingClientRect();
 
@@ -55,8 +55,11 @@ const BugControls = () => {
       x = Math.max(0, Math.min(x, rect.width - width));
       y = Math.max(0, Math.min(y, rect.height - height));
 
-      bugElement.style.left = `${x}px`;
-      bugElement.style.top = `${y}px`;
+       if (!isBugDisplay) {
+        bugElement.style.left = `${x}px`;
+        bugElement.style.top = `${y}px`;
+       }
+      
 
       const leftOrRight =
         lastPoint.x === null
