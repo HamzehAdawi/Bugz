@@ -3,7 +3,7 @@
 
 Bugz is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
 
-# 🎮 Gameplay
+# Gameplay
 
 Move around the garden and eat other bugs to gain points.
 
@@ -13,7 +13,7 @@ Each bug species has its own diet and behavior pattern.
 
 Collect bonuses, maintain your streak, and stay alive as long as possible.
 
-# 🧩 Features
+# Features
 
 Dynamic diet system — each bug’s food chain is generated from an object list.
 
@@ -24,7 +24,7 @@ Responsive layout with a simple, modular React structure.
 Expandable design for adding new bugs, diets, and bonuses.
 
 
-⚙️ Tech Stack
+Tech Stack
 
 React (UI + logic)
 
