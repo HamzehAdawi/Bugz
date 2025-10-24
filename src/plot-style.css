@@ -87,7 +87,7 @@ body {
     top: 11.3%;
     left: 10.15%;
     right: 6%;
-    height: 100%;
+    height: 98%;
     width: 79.4%;
     display: flex;
     flex-direction: row;
@@ -134,7 +134,6 @@ body {
     background-image: url(assets/dirt.png);
     background-repeat: repeat;
     z-index: 0;
-
 }
 #plot-title-sign {
     position: absolute;
@@ -235,26 +234,46 @@ body {
     100% { transform: translateY(0); }
 }
 
+.portrait {
+    position: absolute;
+    top: 12%;
+    background-image: url(assets/background-portrait.png);
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 50%;
+    border-radius: 50%;
+    border: #3cb15d 3px dashed;
+}
+.current-bug-display {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 25%;
+    left: 20%;
+    z-index: 1;
+}
+
 
 #bug-control-container {
     position: fixed;
-    top: 19%;
+    top: 20%;
     right: 10.2%;
     width: 78.9%;
-    height: 81.5%;
+    height: 79.5%;
     z-index: 4;
-    cursor: none
+    cursor: none;
 }
 
 #plot-items-container {
-    position: relative;
-    margin-top: -23%;
+    position: absolute;
+    top: 25%;
     display: flex;
     flex-direction: column;
     gap: 20px;
     align-items: center;
     width: 100%;
-    height: 30%;
+    height: 40%;
     user-select: none;
 }
 
@@ -276,10 +295,22 @@ body {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    gap: 10px;
+    
 }
 .diet-images {
     width: 40px;
     height: 40px;
+}
+
+#lives {
+    position: relative;
+    gap: 1px;
+    height: 8%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+
 }
 
 

@@ -30,6 +30,13 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         <div id='left-button-container'>
           <button className="green-button" id='settings-button'>Settings</button>
         </div>
+
+        <div className='portrait'>
+          
+          <div className="current-bug-display">
+            <BugControls  isBugDisplay={true} className="curr-bug"/>
+          </div>
+        </div>
         
         
         <div id='plot-items-container'>
@@ -37,21 +44,27 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           <div>
             {bugs.map((element, index) => (
               <div key={index} className="diet-item">
-               { element.name === bug ? null: 
-                element.diet.map((dietItem, dietIndex) => (
+               { element.name === bug ? element.diet.map((dietItem, dietIndex) => (
                   <img 
                     src={require(`../assets/${dietItem}-diet.png`)}
                     alt={dietItem}
                       className="diet-images"
                     />
-                ))}
+                )) : null
+                }
               </div> 
             ))}
 
           </div>
-          <PlotPanelItem title="Bonuses" className="structure-container" />
+          
           <PlotPanelItem title="Streak" className="structure-container" />
-           <PlotPanelItem title="Lives" className="structure-container" />
+          <PlotPanelItem title="Lives" className="structure-container" />
+          <div id='lives'>
+            <img src={require('../assets/heart.png')} alt="heart" />
+            <img src={require('../assets/heart.png')} alt="heart" />
+            <img src={require('../assets/heart.png')} alt="heart" />
+          </div>
+          <PlotPanelItem title="Bonuses" className="structure-container" />
         </div>
         
 
@@ -59,10 +72,10 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       
       <div id='top-plot-panel'>
   
-        <div className="animated-bird">
+        {/* <div className="animated-bird">
           <img id="birdie" src={require('../assets/flying-birdie.png')} alt="bird"/>
           <AnimatedBird birdId={"birdie"}/>
-        </div>
+        </div> */}
 
       </div>
            

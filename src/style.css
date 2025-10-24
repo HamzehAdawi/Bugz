@@ -21,8 +21,8 @@ body {
   font-family: "Rubik Bubbles";
   font-size: 6vw;
   text-shadow: 2px 16px 1px rgb(59, 37, 26);
-  top: -6.5%;
-  left: 26%;
+  top: 5%;
+  left: 42.8%;
   position: absolute;
   pointer-events: none;
   user-select: none;
@@ -53,7 +53,7 @@ body {
 
 #plots-container {
   position: absolute;
-  top: 19%;
+  top: 15%;
   height: 30vw;
   width: 24vw;
   border-radius: 10%;
