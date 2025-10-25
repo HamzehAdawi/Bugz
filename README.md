@@ -7,13 +7,14 @@ Contributions are very much welcome!
 
 # Gameplay
 
-Move around the garden and eat other bugs to gain points.
-
-Watch out for larger predators — they’ll eat you!
-
-Each bug species has its own diet and behavior pattern.
-
+(Main game)
+Move around the garden and eat other bugs to and grow.
+Watch out for larger predators, they’ll eat you!
+Each level become a bigger bug species with their own  diet and behavior pattern.
 Collect bonuses, maintain your streak, and stay alive as long as possible.
+
+(Survival) 
+...
 
 
 ## 🤝 Contributing
