@@ -18,11 +18,23 @@ Collect bonuses, maintain your streak, and stay alive as long as possible.
 
 ## 🤝 Contributing
 Contributions are very much welcome!  
-If you’d like to improve this project, please fork the repo and open a pull request.  
-Check out the [CONTRIBUTING.md](CONTRIBUTING.md) file for details.
+If you’d like to improve this project:
+
+Thanks for your interest in contributing! ❤️
+
+1. Fork this repository.
+2. Create a new branch: `git checkout -b my-feature`.
+3. Make your changes.
+4. Commit: `git commit -m "Add new feature"`.
+5. Push: `git push origin my-feature`.
+6. Open a Pull Request.
+
+- Follow existing formatting.
+- Write clear commit messages.
 
 
-# Development (Getting Started with Create React App)
+
+# Helpful Resources (Getting Started with Create React App)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
