@@ -36,13 +36,10 @@ Thanks for your interest in contributing! ❤️
 
 # Helpful Resources (Getting Started with Create React App)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-Tech Stack
-
-React (UI + logic)
-
-JavaScript (ES6+)
+The purpose of this project was to learn more about topics such as: 
+- React (UI + logic)
+- JavaScript (ES6+)
+- Game development 
 
 ## Available Scripts
 
