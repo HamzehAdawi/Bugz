@@ -14,12 +14,18 @@ Each level become a bigger bug species with their own  diet and behavior pattern
 Collect bonuses, maintain your streak, and stay alive as long as possible.
 
 (Survival) 
-...
+Under construction
 
 
 ## 🤝 Contributing
-Contributions are very much welcome!  
-If you’d like to improve this project:
+Contributions are very much welcome! 
+
+The purpose of this project was to learn more about topics surrounding: 
+- React (UI + logic)
+- JavaScript (ES6+)
+- Game development
+
+Please if you’d like to improve this project, join me:
 
 Thanks for your interest in contributing! ❤️
 
@@ -34,15 +40,7 @@ Thanks for your interest in contributing! ❤️
 - Write clear commit messages.
 
 
-
-# Helpful Resources (Getting Started with Create React App)
-
-The purpose of this project was to learn more about topics such as: 
-- React (UI + logic)
-- JavaScript (ES6+)
-- Game development 
-
-## Available Scripts
+# Resources (Getting Started with Create React App)
 
 In the project directory, you can run:
 
