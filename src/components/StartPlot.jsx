@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import '../plot-style.css';
 import PlotDecorations from './PlotDecorations';
 import AnimatedBird from './AnimateBird';
@@ -6,10 +6,116 @@ import PlotPanelItem from './PlotPanelItem';
 import BugControls from './BugControls';
 import {bugs} from '../data/bugs.js';
 
+const QuitConfirmationModal = ({ isOpen, onConfirm, onCancel }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000
+      }}
+      onClick={onCancel}
+    >
+      <div 
+        style={{
+          backgroundColor: '#fff',
+          padding: '30px',
+          borderRadius: '15px',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+          maxWidth: '400px',
+          width: '90%',
+          textAlign: 'center'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        
+        <p style={{ 
+          marginBottom: '30px', 
+          color: '#666',
+          fontSize: '16px'
+        }}>
+          Are you sure you want to leave?
+        </p>
+        <div style={{ 
+          display: 'flex', 
+          gap: '15px', 
+          justifyContent: 'center' 
+        }}>
+          <button 
+            onClick={onConfirm}
+            style={{
+              padding: '12px 30px',
+              fontSize: '16px',
+              borderRadius: '8px',
+              border: 'none',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              transition: 'background-color 0.3s'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#4CAF50'}
+          >
+            Yes
+          </button>
+          <button 
+            onClick={onCancel}
+            style={{
+              padding: '12px 30px',
+              fontSize: '16px',
+              borderRadius: '8px',
+              border: '2px solid #ddd',
+              backgroundColor: 'white',
+              color: '#333',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              transition: 'all 0.3s'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = '#f5f5f5';
+              e.target.style.borderColor = '#999';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = 'white';
+              e.target.style.borderColor = '#ddd';
+            }}
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const StartPlot = ({ onBack, dark, setDark }) => {
   const selectedPlotName = typeof window !== 'undefined' ? localStorage.getItem('selectedPlotName') : null;
   const mainRef = useRef(null);
   const bug = "worm";
+  const [showQuitModal, setShowQuitModal] = useState(false);
+
+  const handleQuitClick = () => {
+    setShowQuitModal(true);
+  };
+
+  const handleConfirmQuit = () => {
+    setShowQuitModal(false);
+    onBack();
+  };
+
+  const handleCancelQuit = () => {
+    setShowQuitModal(false);
+  };
 
   return (
     <div
@@ -46,10 +152,11 @@ const StartPlot = ({ onBack, dark, setDark }) => {
               <div key={index} className="diet-item">
                { element.name === bug ? element.diet.map((dietItem, dietIndex) => (
                   <img 
+                    key={dietIndex}
                     src={require(`../assets/${dietItem}-diet.png`)}
                     alt={dietItem}
-                      className="diet-images"
-                    />
+                    className="diet-images"
+                  />
                 )) : null
                 }
               </div> 
@@ -84,7 +191,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
 
       <div id="right-plot-panel">
         <div id='right-button-container'>
-          <button className="green-button" id='back-menu-button' onClick={onBack}>Quit</button>
+          <button className="green-button" id='back-menu-button' onClick={handleQuitClick}>Quit</button>
         </div>
         
       </div>
@@ -101,6 +208,12 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           
         </div>
       </div>
+
+      <QuitConfirmationModal 
+        isOpen={showQuitModal}
+        onConfirm={handleConfirmQuit}
+        onCancel={handleCancelQuit}
+      />
       
     </div>
   );
