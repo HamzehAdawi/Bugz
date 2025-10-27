@@ -55,10 +55,10 @@ const BugControls = ({ isBugDisplay }) => {
       x = Math.max(0, Math.min(x, rect.width - width));
       y = Math.max(0, Math.min(y, rect.height - height));
 
-       if (!isBugDisplay) {
+      if (!isBugDisplay) {
         bugElement.style.left = `${x}px`;
         bugElement.style.top = `${y}px`;
-       }
+      }
       
 
       const leftOrRight =

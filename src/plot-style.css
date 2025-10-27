@@ -99,6 +99,7 @@ body {
     z-index: 1;
     border: #58481cff 5px solid;
     border-top: none;
+    overflow: hidden;
 }
 
 #grass-canvas {
@@ -125,7 +126,7 @@ body {
 #dirt-canvas {
     position: absolute;
     top: 5%;
-    width: 100%;
+    width: 300%;
     height: 95%;
     display: flex;
     flex-direction: row;
@@ -254,7 +255,6 @@ body {
     z-index: 1;
 }
 
-
 #bug-control-container {
     position: fixed;
     top: 20%;
@@ -312,6 +312,7 @@ body {
     justify-content: center;
 
 }
+
 
 
 

@@ -96,7 +96,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         <div id='grass-flakes'></div>
         <div id='dirt-canvas'>
         <div id='bug-control-container'>
-          <BugControls />
+          <BugControls className="character"/>
         </div>
           
         </div>
