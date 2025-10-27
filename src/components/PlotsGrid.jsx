@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import "../css/PlotsGrid.css"
 
 const PlotsGrid = ({ onStart, visible = true, onClose }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [names, setNames] = useState(['', '', '', '']);
+  const [editingIndex, setEditingIndex] = useState(null);
+
 
   useEffect(() => {
     // load saved names
@@ -17,6 +20,7 @@ const PlotsGrid = ({ onStart, visible = true, onClose }) => {
 
   const containerRef = useRef(null);
   const plotsContainerRef = useRef(null);
+  const inputRefs = useRef([]);
 
 
 
@@ -133,13 +137,46 @@ const PlotsGrid = ({ onStart, visible = true, onClose }) => {
                 if (e.key === 'Enter') setSelectedIndex(i);
               }}
             >
-              <input
-                className="plot-names"
-                placeholder={`New Game #${i + 1}`}
-                value={names[i]}
-                onChange={(e) => handleNameChange(i, e.target.value)}
-              />
-            </div>
+              
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <input
+                  ref={(el) => (inputRefs.current[i] = el)}
+                  className="plot-names"
+                  placeholder={`New Game #${i + 1}`}
+                  value={names[i]}
+                  readOnly={names[i].length > 0 && editingIndex !== i} 
+                  onChange={(e) => handleNameChange(i, e.target.value)}
+                  onClick={() => {
+                    if (names[i].length === 0) {
+                      setEditingIndex(i);
+                    }
+                  }}
+                  onBlur={() => {
+                    if (editingIndex === i) setEditingIndex(null);
+                  }}
+                />             
+                {names[i] && names[i].length > 0 && editingIndex !== i && (
+                    <button
+                      className="green-button"
+                      style={{ padding: '6px 6px', fontSize: '14px', marginRight: "2px", marginBottom: "20px" }}
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        setEditingIndex(i);
+                        setTimeout(() => {
+                          if (inputRefs.current[i]) {
+                            inputRefs.current[i].focus();
+                            const el = inputRefs.current[i];
+                            const len = el.value ? el.value.length : 0;
+                            el.setSelectionRange(len, len);
+                          }
+                        }, 0);
+                      }}
+                        >
+                          Rename
+                    </button>
+                  )}
+                </div>
+           </div>
           ))}
 
           <div id="plot-select-buttons">
