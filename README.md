@@ -1,8 +1,46 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# BUGZ
 
-## Available Scripts
+Bugz is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
+
+Contributions are very much welcome!  
+
+# Gameplay
+
+(Main game)
+Move around the garden and eat other bugs to and grow.
+Watch out for larger predators, they’ll eat you!
+Each level become a bigger bug species with their own  diet and behavior pattern.
+Collect bonuses, maintain your streak, and stay alive as long as possible.
+
+(Survival) 
+Under construction
+
+
+## 🤝 Contributing
+Contributions are very much welcome! 
+
+The purpose of this project was to learn more about topics surrounding: 
+- React (UI + logic)
+- JavaScript (ES6+)
+- Game development
+
+Please if you’d like to improve this project, join me:
+
+Thanks for your interest in contributing! ❤️
+
+1. Fork this repository.
+2. Create a new branch: `git checkout -b my-feature`.
+3. Make your changes.
+4. Commit: `git commit -m "Add new feature"`.
+5. Push: `git push origin my-feature`.
+6. Open a Pull Request.
+
+- Follow existing formatting.
+- Write clear commit messages.
+
+
+# Resources (Getting Started with Create React App)
 
 In the project directory, you can run:
 
@@ -44,27 +82,3 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
