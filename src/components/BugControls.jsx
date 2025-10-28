@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "../plot-style.css";
+import "../css/plot-style.css";
 import worm from "../assets/worm.png";
 import { bugs } from "../data/bugs.js";
 
@@ -55,10 +55,10 @@ const BugControls = ({ isBugDisplay }) => {
       x = Math.max(0, Math.min(x, rect.width - width));
       y = Math.max(0, Math.min(y, rect.height - height));
 
-       if (!isBugDisplay) {
+      if (!isBugDisplay) {
         bugElement.style.left = `${x}px`;
         bugElement.style.top = `${y}px`;
-       }
+      }
       
 
       const leftOrRight =

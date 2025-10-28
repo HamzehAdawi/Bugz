@@ -1,5 +1,5 @@
 import React from "react";
-import '../plot-style.css';
+import '../css/plot-style.css';
 
 const PlotPanelItem = ({ title }) => {
   return (
