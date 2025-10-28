@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import './style.css';
+import './css/style.css';
 import Menu from './components/Menu';
 import StartPlot from './components/StartPlot';
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "../plot-style.css";
+import "../css/plot-style.css";
 import worm from "../assets/worm.png";
 import { bugs } from "../data/bugs.js";
 
