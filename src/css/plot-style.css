@@ -34,7 +34,6 @@ body {
     z-index: 2;
     gap: 20px;
     border-radius: 5%;
-
 }
 
 #right-plot-panel {
@@ -117,13 +116,13 @@ body {
     bottom: 44%;
     width: 100%;
     height: 4.4%;
-    /* avoid a bright fallback on cold load while the image downloads */
     background-color: transparent;
     background-repeat: repeat;
     pointer-events: none;
     background-image: url(../assets/grasflakes.png);
     z-index: 1;
 }
+
 #dirt-canvas {
     position: absolute;
     top: 5%;
@@ -137,6 +136,7 @@ body {
     background-repeat: repeat;
     z-index: 0;
 }
+
 #plot-title-sign {
     position: absolute;
     left: 50%;
@@ -163,7 +163,7 @@ body {
     bottom: 3.4vh;
     height: 20%;
     width: 100%;
-    text-shadow: #000000 1px 1px 0;;
+    text-shadow: #000000 1px 1px 0;
 }
 
 #back-menu-button {
@@ -195,7 +195,6 @@ body {
     justify-content: center;
     box-shadow: 0px 0 14px rgba(0, 0, 0, 0.5); 
     clip-path: inset(-10px -10px 0px 0px); 
-    
 }
 
 #settings-button {
@@ -218,7 +217,6 @@ body {
     background-color: #432d05;
     border-radius: 12%;
     border: 4px #352404 solid;
- 
 }
 
 .animated-bird {
@@ -247,6 +245,7 @@ body {
     border-radius: 50%;
     border: #3cb15d 3px dashed;
 }
+
 .current-bug-display {
     position: absolute;
     height: 100%;
@@ -297,8 +296,8 @@ body {
     flex-direction: row;
     align-items: flex-start;
     gap: 10px;
-    
 }
+
 .diet-images {
     width: 40px;
     height: 40px;
@@ -311,9 +310,15 @@ body {
     width: 10%;
     display: flex;
     justify-content: center;
-
 }
 
-
-
-
+.panel-item-value {
+    font-size: 2vw;
+    font-family: "Tiny5", sans-serif;
+    color: #3cb15d;
+    text-shadow: 0px 1px 4px #000000;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    user-select: none;
+    text-align: center;
+}

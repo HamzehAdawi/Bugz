@@ -1,4 +1,3 @@
-
 export const bugs = [
     {
         name: "waste",
@@ -9,7 +8,5 @@ export const bugs = [
         name: "worm",
         diet: ["worm", "waste"],
         img: "../assets/worm-diet.png"
-    },
-
+    }
 ];
-
