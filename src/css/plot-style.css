@@ -106,7 +106,7 @@ body {
     position: absolute;
     top: 0;
     width: 100%;
-    height: 5%;
+    height: 6%;
     background-image: url(../assets/Empty-grass-plot.png);
     background-repeat: repeat;
     z-index: 0;
@@ -126,15 +126,16 @@ body {
 }
 #dirt-canvas {
     position: absolute;
-    top: 5%;
-    width: 300%;
-    height: 95%;
+    top: 7%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-image: url(../assets/dirt.png);
     background-repeat: repeat;
+    background-image: url(../assets/dirt.png);
+
     z-index: 0;
 }
 #plot-title-sign {

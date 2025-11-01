@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import Phaser from 'phaser';
+import Phaser, { Scale } from 'phaser';
 
 function StartGame() {
   const phaserRef = useRef(null);
@@ -10,8 +10,6 @@ function StartGame() {
 
     const config = {
         type: Phaser.AUTO,
-        width: '100%',
-        height: '100%',
         parent: phaserRef.current, 
         scene: {
           preload,
@@ -21,10 +19,13 @@ function StartGame() {
         physics: {
           default: 'arcade',
         },
+        scale: {
+          mode: Phaser.Scale.RESIZE
+        }
     };
 
     const game = new Phaser.Game(config);
-
+    
     function preload() {
         this.load.image('canvas', '/assets/dirt-plot.png');
         this.load.spritesheet('worm', '/assets/worm-sprite.png', 
@@ -33,39 +34,35 @@ function StartGame() {
     }
 
     function create() {
-        this.add.image(200.5, 293, 'canvas');
-        this.add.image(800, 293, 'canvas');
-        this.add.image(200.5, 893, 'canvas');
-        this.add.image(800, 893, 'canvas');
-      
 
-        player = this.physics.add.sprite(400, 450, 'worm');
+      this.add.tileSprite(0, 0, game.canvas.width*2, game.canvas.height*2, "canvas");
+      player = this.physics.add.sprite((game.canvas.width/2), (game.canvas.height/2), 'worm');
 
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
+      player.setBounce(0.2);
+      player.setCollideWorldBounds(true);
 
 
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('worm', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
+      this.anims.create({
+          key: 'left',
+          frames: this.anims.generateFrameNumbers('worm', { start: 0, end: 3 }),
+          frameRate: 10,
+          repeat: -1
+      });
 
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'worm', frame: 4 } ],
-            frameRate: 20
-        });
+      this.anims.create({
+          key: 'turn',
+          frames: [ { key: 'worm', frame: 4 } ],
+          frameRate: 20
+      });
 
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('worm', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
+      this.anims.create({
+          key: 'right',
+          frames: this.anims.generateFrameNumbers('worm', { start: 5, end: 8 }),
+          frameRate: 10,
+          repeat: -1
+      });
 
-        cursors = this.input.keyboard.createCursorKeys();
+      cursors = this.input.keyboard.createCursorKeys();
         
     }
 
