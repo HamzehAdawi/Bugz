@@ -9,21 +9,25 @@ import StartGame from './StartGame.jsx';
 import QuitConfirmationModal from './QuitConfirmationModal.jsx';
 
 const StartPlot = ({ onBack, dark, setDark }) => {
-
-  const selectedPlotName = typeof window !== 'undefined' ? localStorage.getItem('selectedPlotName') : null;
+  const selectedPlotName = typeof window !== 'undefined' ?
+    localStorage.getItem('selectedPlotName') : null;
   const mainRef = useRef(null);
   const bug = "worm";
   const [showQuitModal, setShowQuitModal] = useState(false);
+  
+  const [streak, setStreak] = useState(0);
+
+  const handleFoodCollected = () => {
+    setStreak(prevStreak => prevStreak + 1);
+  };
 
   const handleQuitClick = () => {
     setShowQuitModal(true);
   };
-
   const handleConfirmQuit = () => {
     setShowQuitModal(false);
     onBack();
   };
-
   const handleCancelQuit = () => {
     setShowQuitModal(false);
   };
@@ -43,25 +47,21 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       }}
     >
       <div id="left-plot-panel">
-
         <div id='left-button-container'>
           <button className="green-button" id='settings-button'>Settings</button>
         </div>
-
         <div className='portrait'>
-          
           <div className="current-bug-display">
-            <BugControls  isBugDisplay={true} className="curr-bug"/>
+            <BugControls isBugDisplay={true} className="curr-bug"/>
           </div>
         </div>
-        
-        
         <div id='plot-items-container'>
           <PlotPanelItem title="Diet" className="veggie-container" />
           <div>
             {bugs.map((element, index) => (
               <div key={index} className="diet-item">
-               { element.name === bug ? element.diet.map((dietItem, dietIndex) => (
+               { element.name === bug ?
+                element.diet.map((dietItem, dietIndex) => (
                   <img 
                     key={dietIndex}
                     src={require(`../assets/${dietItem}-diet.png`)}
@@ -72,10 +72,9 @@ const StartPlot = ({ onBack, dark, setDark }) => {
                 }
               </div> 
             ))}
-
           </div>
-          
           <PlotPanelItem title="Streak" className="structure-container" />
+          <div className="panel-item-value">{streak}</div>
           <PlotPanelItem title="Lives" className="structure-container" />
           <div id='lives'>
             <img src={require('../assets/heart.png')} alt="heart" />
@@ -84,55 +83,31 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           </div>
           <PlotPanelItem title="Bonuses" className="structure-container" />
         </div>
-        
-
       </div>
-      
-      <div id='top-plot-panel'>
-  
-        {/* <div className="animated-bird">
-          <img id="birdie" src={require('../assets/flying-birdie.png')} alt="bird"/>
-          <AnimatedBird birdId={"birdie"}/>
-        </div> */}
-
-      </div>
-           
-
+      <div id='top-plot-panel'></div>
       <PlotDecorations plotToDecorateRef={mainRef} />
-
       <div id="right-plot-panel">
         <div id='right-button-container'>
           <button className="green-button" id='back-menu-button' onClick={handleQuitClick}>Quit</button>
         </div>
-        
       </div>
-
       <div id="bottom-plot-panel"></div>
-      
       <div id='main-panel'>
         <div id='grass-canvas' ref={mainRef}></div>
         <div id='grass-flakes'></div>
         <div id='dirt-canvas'>
-        <div id='bug-control-container'>
-          {/* <BugControls className="character"/> */}
-           <StartGame />
-        </div>
-
-         
-          
+          <div id='bug-control-container'>
+            <StartGame onFoodCollected={handleFoodCollected} />
+          </div>
         </div>
       </div>
-
       <QuitConfirmationModal 
         isOpen={showQuitModal}
         onConfirm={handleConfirmQuit}
         onCancel={handleCancelQuit}
       />
-      
     </div>
   );
 };
-
-
 
 export default StartPlot;
