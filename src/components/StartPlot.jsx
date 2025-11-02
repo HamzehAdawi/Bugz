@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react';
 import '../css/plot-style.css';
-import PlotDecorations from './PlotDecorations';
-import AnimatedBird from './AnimateBird';
 import PlotPanelItem from './PlotPanelItem';
-import BugControls from './BugControls';
+import BugSpotlight from './BugSpotlight.jsx';
 import {bugs} from '../data/bugs.js';
 import StartGame from './StartGame.jsx';
 import QuitConfirmationModal from './QuitConfirmationModal.jsx';
@@ -33,8 +31,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
   };
 
   return (
-    <div
-      id="garden-plot-container"
+    <div id="garden-plot-container"
       style={{
         backgroundImage: `url(${require('../assets/background_img.png')})`,
         backgroundSize: 'cover',
@@ -52,7 +49,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         </div>
         <div className='portrait'>
           <div className="current-bug-display">
-            <BugControls isBugDisplay={true} className="curr-bug"/>
+            <BugSpotlight isBugDisplay={true} className="curr-bug"/>
           </div>
         </div>
         <div id='plot-items-container'>
@@ -84,22 +81,16 @@ const StartPlot = ({ onBack, dark, setDark }) => {
           <PlotPanelItem title="Bonuses" className="structure-container" />
         </div>
       </div>
-      <div id='top-plot-panel'></div>
-      <PlotDecorations plotToDecorateRef={mainRef} />
+
+
       <div id="right-plot-panel">
         <div id='right-button-container'>
           <button className="green-button" id='back-menu-button' onClick={handleQuitClick}>Quit</button>
         </div>
       </div>
-      <div id="bottom-plot-panel"></div>
+      
       <div id='main-panel'>
-        <div id='grass-canvas' ref={mainRef}></div>
-        <div id='grass-flakes'></div>
-        <div id='dirt-canvas'>
-          <div id='bug-control-container'>
-            <StartGame onFoodCollected={handleFoodCollected} />
-          </div>
-        </div>
+        <StartGame onFoodCollected={handleFoodCollected} quitButton={showQuitModal}/>
       </div>
       <QuitConfirmationModal 
         isOpen={showQuitModal}
