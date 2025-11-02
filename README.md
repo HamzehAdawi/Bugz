@@ -13,6 +13,8 @@ Watch out for larger predators, they’ll eat you!
 Each level become a bigger bug species with their own  diet and behavior pattern.
 Collect bonuses, maintain your streak, and stay alive as long as possible.
 
+https://github.com/user-attachments/assets/e08e2384-e824-4e96-a164-02fa23014c0c
+
 (Survival) 
 Under construction
 
