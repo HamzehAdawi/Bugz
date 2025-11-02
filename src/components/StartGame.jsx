@@ -1,14 +1,21 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 
-function StartGame() {
+function StartGame({ onFoodCollected }) {
   const phaserRef = useRef(null);
+<<<<<<< HEAD
   const worldWidth = 2600;
   const worldHeight = 2000;
+=======
+  let player;
+  let cursors;
+  let foodGroup;
+>>>>>>> 19297d5b74e02398e129fc194903ff44704627bd
 
   useEffect(() => {
     const config = {
       type: Phaser.AUTO,
+<<<<<<< HEAD
       parent: phaserRef.current,
       physics: { 
         default: 'arcade' 
@@ -20,11 +27,24 @@ function StartGame() {
         preload, 
         create, 
         update 
+=======
+      width: '100%',
+      height: '100%',
+      parent: phaserRef.current,
+      scene: {
+        preload,
+        create,
+        update,
+      },
+      physics: {
+        default: 'arcade',
+>>>>>>> 19297d5b74e02398e129fc194903ff44704627bd
       },
     };
 
     const game = new Phaser.Game(config);
 
+<<<<<<< HEAD
     let player;
     let camera;
     let background;
@@ -68,10 +88,52 @@ function StartGame() {
       });
 
       this.anims.create({
+=======
+    function preload() {
+      this.load.image('canvas', '/assets/dirt-plot.png');
+      this.load.spritesheet('worm', '/assets/worm-sprite.png', {
+        frameWidth: 40,
+        frameHeight: 35,
+      });
+      this.load.image('waste', '/assets/waste-diet.png');
+    }
+
+    function create() {
+      this.onFoodCollected = onFoodCollected;
+      this.physics.world.setBounds(0, 0, 1600, 1000);
+
+      this.add.image(200.5, 293, 'canvas');
+      this.add.image(800, 293, 'canvas');
+      this.add.image(200.5, 893, 'canvas');
+      this.add.image(800, 893, 'canvas');
+
+      player = this.physics.add.sprite(400, 450, 'worm');
+      player.setBounce(0.2);
+      player.setCollideWorldBounds(true);
+
+      this.cameras.main.startFollow(player, true, 0.08, 0.08);
+      this.cameras.main.setBounds(0, 0, 1600, 1000);
+
+      foodGroup = this.physics.add.group();
+      this.physics.add.overlap(player, foodGroup, collectFood, null, this);
+
+      for (let i = 0; i < 15; i++) {
+        spawnFood();
+      }
+
+      this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('worm', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+      this.anims.create({
+>>>>>>> 19297d5b74e02398e129fc194903ff44704627bd
         key: 'turn',
         frames: [{ key: 'worm', frame: 4 }],
         frameRate: 20,
       });
+<<<<<<< HEAD
 
       this.anims.create({
         key: 'right',
@@ -141,6 +203,59 @@ function StartGame() {
   }, []);
 
   return <div ref={phaserRef} style={{ width: '100%', height: '101vh' }} />;
+=======
+      this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('worm', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1,
+      });
+      cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    function spawnFood() {
+      if (!foodGroup) return;
+      const x = Phaser.Math.Between(50, 1550);
+      const y = Phaser.Math.Between(100, 900);
+      const foodItem = foodGroup.create(x, y, 'waste');
+      foodItem.setBounce(0.2);
+    }
+
+    function collectFood(player, food) {
+      food.disableBody(true, true);
+      if (this.onFoodCollected) {
+        this.onFoodCollected();
+      }
+      spawnFood();
+    }
+
+    function update() {
+      if (cursors.left.isDown) {
+        player.setVelocityX(-160);
+        player.anims.play('left', true);
+      } else if (cursors.right.isDown) {
+        player.setVelocityX(160);
+        player.anims.play('right', true);
+      } else if (cursors.up.isDown) {
+        player.setVelocityY(-160);
+        player.anims.play('turn', true);
+      } else if (cursors.down.isDown) {
+        player.setVelocityY(160);
+        player.anims.play('turn', true);
+      } else {
+        player.setVelocityX(0);
+        player.setVelocityY(0);
+        player.anims.play('turn');
+      }
+    }
+
+    return () => {
+      game.destroy(true);
+    };
+  }, []);
+
+  return <div ref={phaserRef} />;
+>>>>>>> 19297d5b74e02398e129fc194903ff44704627bd
 }
 
 export default StartGame;
