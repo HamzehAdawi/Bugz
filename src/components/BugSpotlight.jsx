@@ -3,7 +3,7 @@ import "../css/plot-style.css";
 import worm from "../assets/worm.png";
 import { bugs } from "../data/bugs.js";
 
-const BugControls = ({ isBugDisplay }) => {
+const BugSpotlight = ({ isBugDisplay }) => {
   const bug = useRef(null);
   const spritesheet = useRef(null);
 
@@ -119,4 +119,4 @@ const BugControls = ({ isBugDisplay }) => {
   );
 };
 
-export default BugControls;
+export default BugSpotlight;

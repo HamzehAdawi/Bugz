@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react';
 import '../css/plot-style.css';
-import PlotDecorations from './PlotDecorations';
-import AnimatedBird from './AnimateBird';
 import PlotPanelItem from './PlotPanelItem';
-import BugControls from './BugControls';
+import BugSpotlight from './BugSpotlight.jsx';
 import {bugs} from '../data/bugs.js';
 import StartGame from './StartGame.jsx';
 import QuitConfirmationModal from './QuitConfirmationModal.jsx';
@@ -29,8 +27,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
   };
 
   return (
-    <div
-      id="garden-plot-container"
+    <div id="garden-plot-container"
       style={{
         backgroundImage: `url(${require('../assets/background_img.png')})`,
         backgroundSize: 'cover',
@@ -49,9 +46,8 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         </div>
 
         <div className='portrait'>
-          
           <div className="current-bug-display">
-            <BugControls  isBugDisplay={true} className="curr-bug"/>
+            <BugSpotlight isBugDisplay={true} className="curr-bug"/>
           </div>
         </div>
         
@@ -88,7 +84,6 @@ const StartPlot = ({ onBack, dark, setDark }) => {
 
       </div>
 
-      <PlotDecorations plotToDecorateRef={mainRef} />
 
       <div id="right-plot-panel">
         <div id='right-button-container'>
@@ -96,8 +91,6 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         </div>
         
       </div>
-
-      <div id="bottom-plot-panel"></div>
       
       <div id='main-panel'>
         <StartGame quitButton={showQuitModal}/>
@@ -107,13 +100,10 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         isOpen={showQuitModal}
         onConfirm={handleConfirmQuit}
         onCancel={handleCancelQuit}
-        
       />
       
     </div>
   );
 };
-
-
 
 export default StartPlot;
