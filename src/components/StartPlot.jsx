@@ -87,16 +87,6 @@ const StartPlot = ({ onBack, dark, setDark }) => {
         
 
       </div>
-      
-      <div id='top-plot-panel'>
-  
-        {/* <div className="animated-bird">
-          <img id="birdie" src={require('../assets/flying-birdie.png')} alt="bird"/>
-          <AnimatedBird birdId={"birdie"}/>
-        </div> */}
-
-      </div>
-           
 
       <PlotDecorations plotToDecorateRef={mainRef} />
 
@@ -110,23 +100,14 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       <div id="bottom-plot-panel"></div>
       
       <div id='main-panel'>
-        <div id='grass-canvas' ref={mainRef}></div>
-        <div id='grass-flakes'></div>
-        <div id='dirt-canvas'>
-        <div id='bug-control-container'>
-          {/* <BugControls className="character"/> */}
-           <StartGame />
-        </div>
-
-         
-          
-        </div>
+        <StartGame quitButton={showQuitModal}/>
       </div>
 
       <QuitConfirmationModal 
         isOpen={showQuitModal}
         onConfirm={handleConfirmQuit}
         onCancel={handleCancelQuit}
+        
       />
       
     </div>

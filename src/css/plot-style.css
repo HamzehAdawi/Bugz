@@ -64,30 +64,13 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#top-plot-panel {
-    position: relative;
-    bottom: 44.3%;
-    left: .14%;
-    height: 11.6%;
-    width: 79.4vw;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0 0 1% 1%;
-    text-shadow: 2px 16px 1px rgb(59, 37, 26);
-    text-align: center;
-    background-color: var(--theme-color);
-    overflow: hidden;
-    z-index: 1;
-}
 
 #main-panel {
     position: absolute;
-    top: 11.3%;
+    top: 0;
     left: 10.15%;
     right: 6%;
-    height: 98%;
+    height: 100%;
     width: 79.4%;
     display: flex;
     flex-direction: row;
