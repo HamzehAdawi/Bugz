@@ -17,10 +17,13 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       scale: { 
         mode: Phaser.Scale.RESIZE 
       },
+      time: {
+
+      },
       scene: { 
         preload, 
         create, 
-        update 
+        update
       },
     };
 
@@ -32,6 +35,8 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
     let grassLayer;
     let skyLayer;
     let foodGroup;
+    let bugFood = []; 
+    let bugFoodDirection = [];
 
     function preload() {
       this.load.image('canvas', '/assets/dirt-plot.png');
@@ -102,19 +107,18 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
    function update() {
     if (!player) return;
 
+    //Bug movement 
     const pointer = this.input.activePointer;
     const worldPoint = pointer.positionToCamera(this.cameras.main);
-
-    // Bug Movemnent  
     const maxSpeed = 300;       
     const followStrength = 1.88; 
     const stopRadius = 35;      
     const slowRadius = 170;    
-
-
     const dx = worldPoint.x - player.x;
     const dy = worldPoint.y - player.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
+    let foodDireciton = Math.random(1 ,0) == 1 ? -1:1; 
+
 
     if (distance > stopRadius) {
       const angle = Math.atan2(dy, dx);
@@ -136,19 +140,36 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
         followStrength
       );
 
-      // Animation
-      if (player.body.velocity.x < 0) player.anims.play('left', true);
-      else player.anims.play('right', true);
-    } else {
-      // Smooth stop
-      player.body.velocity.x *= 0.8;
-      player.body.velocity.y *= 0.8;
+      if (player.body.velocity.x < 0) {
+        player.anims.play('left', true)
 
-      if (Math.abs(player.body.velocity.x) < 10 && Math.abs(player.body.velocity.y) < 10) {
-        player.setVelocity(0);
-        player.anims.play('turn', true);
+      } else {
+        player.anims.play('right', true);
       }
-    }
+    } else {
+        player.body.velocity.x *= 0.8;
+        player.body.velocity.y *= 0.8;
+
+        if (Math.abs(player.body.velocity.x) < 10 && Math.abs(player.body.velocity.y) < 10) {
+          player.setVelocity(0);
+          player.anims.play('turn', true);
+        }
+      }
+
+      for (let i = 0; i < bugFood.length; i++) {
+        const speed = bugs[bug].speed;
+        bugFood[i].x += (foodDireciton * speed * this.game.loop.delta / 1000); 
+
+        if (bugFood[i].x >= worldWidth +10 || bugFood[i].x <= -10) {
+          foodDireciton *= -1;
+        }
+        if(bugFoodDirection >=1) {
+          bugFood[i].anims.play('right', true);
+        } else {
+          bugFood[i].anims.play('left', true);
+        }
+      }
+      
     }
 
     function spawnFood() {
@@ -161,8 +182,15 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       const dietSize = 2;
       const randomIndex = Math.floor(Math.random() * dietSize);
 
-      const foodItem = foodGroup.create(x, y, bugs[bug].diet[randomIndex]);
+      const food = bugs[bug].diet[randomIndex];
+      const foodItem = foodGroup.create(x, y, food);
       foodItem.setBounce(0.2);
+
+      
+      if (food != "waste") {
+        bugFood.push(foodItem);
+        bugFoodDirection.push(Math.random(1 ,0) == 1 ? -1:1);
+      }
       
       return foodItem;
     }
