@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
+import { bugs } from '../data/bugs';
 
-function StartGame({ onFoodCollected }) {
+function StartGame({ onFoodCollected, quitButton, bug}) {
   const phaserRef = useRef(null);
   const worldWidth = 2600;
   const worldHeight = 2000;
@@ -52,10 +53,10 @@ function StartGame({ onFoodCollected }) {
       grassLayer = this.add.tileSprite(0, 300, worldWidth, 200, 'grass').setOrigin(0).setDepth(-1);
       skyLayer = this.add.tileSprite(0, 0, worldWidth, 300, 'sky').setOrigin(0).setDepth(-1);
 
-  // Player (ensure spawn within physics bounds)
-  const topBound = this.physics.world.bounds.y;
-  const safeY = Math.max(height / 2, topBound + 50);
-  player = this.physics.add.sprite(width / 2, safeY, 'worm');
+      // Player (ensure spawn within physics bounds)
+      const topBound = this.physics.world.bounds.y;
+      const safeY = Math.max(height / 2, topBound + 50);
+      player = this.physics.add.sprite(width / 2, safeY, 'worm');
       player.setBounce(0.2);
       player.setCollideWorldBounds(true);
 
@@ -64,9 +65,13 @@ function StartGame({ onFoodCollected }) {
       camera.setBounds(0, 0, worldWidth, worldHeight);
       camera.startFollow(player, true, 1, 1, null, -110);
 
+      //FOOD
       this.onFoodCollected = onFoodCollected;
       foodGroup = this.physics.add.group();
       this.physics.add.overlap(player, foodGroup, collectFood, null, this);
+
+
+      //ENEMIES (TO-DO)
 
       for (let i = 0; i < 15; i++) {
         spawnFood();
@@ -100,29 +105,26 @@ function StartGame({ onFoodCollected }) {
     const pointer = this.input.activePointer;
     const worldPoint = pointer.positionToCamera(this.cameras.main);
 
-    // --- Tunable Parameters ---
-    const maxSpeed = 300;       // top movement speed
-    const followStrength = 1.88; // how quickly the worm reacts (higher = snappier)
-    const stopRadius = 35;      // how close before it stops following
-    const slowRadius = 170;     // start slowing down before reaching cursor
-    // ---------------------------
+    // Bug Movemnent  
+    const maxSpeed = 300;       
+    const followStrength = 1.88; 
+    const stopRadius = 35;      
+    const slowRadius = 170;    
+
 
     const dx = worldPoint.x - player.x;
     const dy = worldPoint.y - player.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance > stopRadius) {
-      // Move toward pointer
       const angle = Math.atan2(dy, dx);
 
-      // Speed factor — slow down as we approach
       const t = Phaser.Math.Clamp(distance / slowRadius, 0, 1);
       const desiredSpeed = maxSpeed * t;
 
       const targetVX = Math.cos(angle) * desiredSpeed;
       const targetVY = Math.sin(angle) * desiredSpeed;
 
-      // Interpolate velocity (smooth acceleration)
       player.body.velocity.x = Phaser.Math.Linear(
         player.body.velocity.x,
         targetVX,
@@ -152,11 +154,16 @@ function StartGame({ onFoodCollected }) {
     function spawnFood() {
       if (!foodGroup) return;
       const bounds = foodGroup.scene.physics.world.bounds;
-      const margin = 40;
+      const margin = 100;
       const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
       const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
-      const foodItem = foodGroup.create(x, y, 'waste');
+
+      const dietSize = 2;
+      const randomIndex = Math.floor(Math.random() * dietSize);
+
+      const foodItem = foodGroup.create(x, y, bugs[bug].diet[randomIndex]);
       foodItem.setBounce(0.2);
+      
       return foodItem;
     }
 
