@@ -90,7 +90,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       </div>
       
       <div id='main-panel'>
-        <StartGame onFoodCollected={handleFoodCollected} quitButton={showQuitModal}/>
+        <StartGame onFoodCollected={handleFoodCollected} quitButton={showQuitModal} bug ={1}/>
       </div>
       <QuitConfirmationModal 
         isOpen={showQuitModal}
