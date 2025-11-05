@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { bugs } from '../data/bugs';
 
-function StartGame({ onFoodCollected, quitButton, bug}) {
+function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
   const phaserRef = useRef(null);
   const worldWidth = 2600;
   const worldHeight = 2000;
@@ -35,8 +35,10 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
     let grassLayer;
     let skyLayer;
     let foodGroup;
+    let bonusFoodGroup;
     let bugFood = []; 
     let bugFoodDirection = [];
+    let bonusSpawnTimer;
 
     function preload() {
       this.load.image('canvas', '/assets/dirt-plot.png');
@@ -44,6 +46,7 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       this.load.image('grass', '/assets/grasflakes.png')
       this.load.image('sky', '/assets/sky.png')
       this.load.image('waste', '/assets/waste-diet.png');
+      this.load.image('bonus-food', '/assets/waste-diet.png');
     }
 
     function create() {
@@ -72,9 +75,23 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
 
       //FOOD
       this.onFoodCollected = onFoodCollected;
+      this.onBonusCollected = onBonusCollected;
       foodGroup = this.physics.add.group();
       this.physics.add.overlap(player, foodGroup, collectFood, null, this);
 
+      // BONUS FOOD
+      bonusFoodGroup = this.physics.add.group();
+      this.physics.add.overlap(player, bonusFoodGroup, collectBonusFood, null, this);
+
+      bonusSpawnTimer = this.time.addEvent({
+        delay: Phaser.Math.Between(15000, 25000),
+        callback: () => {
+          spawnBonusFood.call(this);
+          // Reset timer with new random delay
+          bonusSpawnTimer.delay = Phaser.Math.Between(15000, 25000);
+        },
+        loop: true
+      });
 
       //ENEMIES (TO-DO)
 
@@ -210,6 +227,67 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       }
     }
 
+    function spawnBonusFood() {
+      if (!bonusFoodGroup || !this.physics) return;
+      
+      const bounds = this.physics.world.bounds;
+      const margin = 100;
+      const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
+      const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
+
+      const bonusFood = bonusFoodGroup.create(x, y, 'bonus-food');
+      bonusFood.setBounce(0.2);
+      bonusFood.setScale(1.5);
+      bonusFood.bonusValue = 10;
+
+      this.tweens.add({
+        targets: bonusFood,
+        alpha: 0.2,
+        duration: 300,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
+
+      this.tweens.add({
+        targets: bonusFood,
+        scaleX: 1.7,
+        scaleY: 1.7,
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
+
+      this.tweens.add({
+        targets: bonusFood,
+        angle: 360,
+        duration: 2000,
+        repeat: -1,
+        ease: 'Linear'
+      });
+
+      this.time.delayedCall(8000, () => {
+        if (bonusFood && bonusFood.active) {
+          this.tweens.killTweensOf(bonusFood);
+          bonusFood.destroy();
+        }
+      });
+
+      return bonusFood;
+    }
+
+    function collectBonusFood(player, bonusFood) {
+      if (!bonusFood || !bonusFoodGroup) return;
+      
+      const bonusValue = bonusFood.bonusValue || 10;
+      bonusFoodGroup.scene.tweens.killTweensOf(bonusFood);
+      bonusFood.destroy();
+
+      if (this.onBonusCollected) {
+        this.onBonusCollected(bonusValue);
+      }
+    }
 
     return () => game.destroy(true);
   }, []);
