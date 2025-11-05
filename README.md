@@ -44,6 +44,7 @@ Thanks for your interest in contributing! ❤️
 - Follow existing formatting.
 - Write clear commit messages.
 
+Give a star if you enjoy :)
 
 # Resources (Getting Started with Create React App)
 
