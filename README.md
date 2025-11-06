@@ -7,11 +7,16 @@ Contributions are very much welcome!
 
 # Gameplay
 
+https://github.com/user-attachments/assets/1d53cd30-97e3-43ea-bbaa-114ab95ba6aa
+
+
+
 (Main game)
 Move around the garden and eat other bugs to and grow.
 Watch out for larger predators, they’ll eat you!
 Each level become a bigger bug species with their own  diet and behavior pattern.
 Collect bonuses, maintain your streak, and stay alive as long as possible.
+
 
 (Survival) 
 Under construction
@@ -39,6 +44,7 @@ Thanks for your interest in contributing! ❤️
 - Follow existing formatting.
 - Write clear commit messages.
 
+Give a star if you enjoy :)
 
 # Resources (Getting Started with Create React App)
 

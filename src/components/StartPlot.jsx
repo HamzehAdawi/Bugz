@@ -14,9 +14,14 @@ const StartPlot = ({ onBack, dark, setDark }) => {
   const [showQuitModal, setShowQuitModal] = useState(false);
   
   const [streak, setStreak] = useState(0);
+  const [bonus, setBonus] = useState(0);
 
   const handleFoodCollected = () => {
     setStreak(prevStreak => prevStreak + 1);
+  };
+
+  const handleBonusCollected = (bonusValue) => {
+    setBonus(prevBonus => prevBonus + bonusValue);
   };
 
   const handleQuitClick = () => {
@@ -96,6 +101,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
             <img src={require('../assets/heart.png')} alt="heart" />
           </div>
           <PlotPanelItem title="Bonuses" className="structure-container" />
+          <div className="panel-item-value">{bonus}</div>
         </div>
       </div>
 
@@ -107,7 +113,7 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       </div>
       
       <div id='main-panel'>
-        <StartGame onFoodCollected={handleFoodCollected} quitButton={showQuitModal} bug ={1}/>
+        <StartGame onFoodCollected={handleFoodCollected} onBonusCollected={handleBonusCollected} quitButton={showQuitModal} bug ={1}/>
       </div>
       <QuitConfirmationModal 
         isOpen={showQuitModal}
