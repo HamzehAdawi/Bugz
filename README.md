@@ -7,7 +7,10 @@ Contributions are very much welcome!
 
 # Gameplay
 
-https://github.com/user-attachments/assets/1d53cd30-97e3-43ea-bbaa-114ab95ba6aa
+
+
+https://github.com/user-attachments/assets/a691a8b9-291d-44b3-b793-da76111250d5
+
 
 
 
