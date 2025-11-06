@@ -190,17 +190,20 @@ body {
 }
 
 .panel-item-container {
-    width: 88%;
-    height: 38%;
+    width: 99%;
+    height: 40%;
     text-align: center;
     align-items: center;
     border-top: none;
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-    background-color: #432d05;
-    border-radius: 12%;
-    border: 4px #352404 solid;
+    background-color: #6a6a6ad2;
+    border-radius: 0%;
+    border-top: 4px #444444 solid;
+    border-bottom: 4px #444444 solid;
+    text-shadow: #000000 13px;
+
 }
 
 .animated-bird {
@@ -259,6 +262,7 @@ body {
     width: 100%;
     height: 52%;
     user-select: none;
+    right: 2%;
 }
 
 .panel-item-title {

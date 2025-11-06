@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 
 const QuitConfirmationModal = ({ isOpen, onConfirm, onCancel }) => {
   if (!isOpen) return null;
