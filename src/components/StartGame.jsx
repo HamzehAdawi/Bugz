@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { bugs } from '../data/bugs';
+import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
-function StartGame({ onFoodCollected, quitButton, bug}) {
+function StartGame({ onFoodCollected, quitButton, bug }) {
   const phaserRef = useRef(null);
+  const gameRef = useRef(null);
+  const sceneRef = useRef(null);
   const worldWidth = 2600;
   const worldHeight = 2000;
 
@@ -27,11 +30,12 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       },
     };
 
-    const game = new Phaser.Game(config);
+  const game = new Phaser.Game(config);
+  gameRef.current = game;
 
-    let player;
-    let camera;
-    let background;
+  let player;
+  let camera;
+  let background;
     let grassLayer;
     let skyLayer;
     let foodGroup;
@@ -47,6 +51,8 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
     }
 
     function create() {
+      // hold a reference to this scene so we can pause/resume from React effects without recreating the game
+      sceneRef.current = this;
       const { width, height } = this.scale;
 
       this.input.setDefaultCursor('url(/assets/pointer.png), pointer');
@@ -107,7 +113,6 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
    function update() {
     if (!player) return;
 
-    //Bug movement 
     const pointer = this.input.activePointer;
     const worldPoint = pointer.positionToCamera(this.cameras.main);
     const maxSpeed = 300;       
@@ -210,9 +215,26 @@ function StartGame({ onFoodCollected, quitButton, bug}) {
       }
     }
 
-
-    return () => game.destroy(true);
+    return () => {
+      if (gameRef.current) {
+        gameRef.current.destroy(true);
+        gameRef.current = null;
+      }
+      sceneRef.current = null;
+    };
   }, []);
+
+  // Pause/resume the scene when quitButton changes without tearing down the whole Phaser game
+  useEffect(() => {
+    
+    const scene = sceneRef.current;
+    if (!scene) return; 
+    if (quitButton) {
+      scene.scene.pause();
+    } else {
+      scene.scene.resume();
+    }
+  }, [quitButton]);
 
   return <div ref={phaserRef} style={{ width: '100%', height: '101vh' }} />;
 }

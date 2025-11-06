@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import '../css/plot-style.css';
 import PlotPanelItem from './PlotPanelItem';
 import BugSpotlight from './BugSpotlight.jsx';
@@ -30,15 +30,32 @@ const StartPlot = ({ onBack, dark, setDark }) => {
     setShowQuitModal(false);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setShowQuitModal(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+  
+
   return (
     <div id="garden-plot-container"
       style={{
-        backgroundImage: `url(${require('../assets/background_img.png')})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundImage: `
+          url(${require('../assets/cobblestone-background.png')}), 
+          url(${require('../assets/cobblestone-background-2.png')}), 
+          url(${require('../assets/cobblestone-background.png')})
+        `,
+        backgroundRepeat: 'repeat, repeat, repeat',
+        backgroundPosition: '0 0, 32px 32px, 164px 164px',
+        backgroundSize: '374px 374px , 264px 364px ,364px',
         width: '100%',
         height: '100%',
-        left: -5,
+        left: -9,
+        right: 0,
         top: -9,
         position: 'absolute',
       }}
