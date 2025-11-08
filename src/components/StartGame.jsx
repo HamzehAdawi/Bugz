@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { bugs } from '../data/bugs';
-import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
   const phaserRef = useRef(null);
@@ -9,6 +8,11 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
   const sceneRef = useRef(null);
   const worldWidth = 2600;
   const worldHeight = 2000;
+  // Bug map to connect JSON
+  const bugMap = new Map([
+    ["waste", 0],
+    ["worm", 1]
+  ]);
 
   useEffect(() => {
     const config = {
@@ -36,13 +40,13 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
   let player;
   let camera;
   let background;
-    let grassLayer;
-    let skyLayer;
-    let foodGroup;
-    let bonusFoodGroup;
-    let bugFood = []; 
-    let bugFoodDirection = [];
-    let bonusSpawnTimer;
+  let grassLayer;
+  let skyLayer;
+  let foodGroup;
+  let bonusFoodGroup;
+  let bugFood = []; 
+  let bugFoodDirection = [];
+  let bonusSpawnTimer;
 
     function preload() {
       this.load.image('canvas', '/assets/dirt-plot.png');
@@ -51,10 +55,12 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
       this.load.image('sky', '/assets/sky.png')
       this.load.image('waste', '/assets/waste-diet.png');
       this.load.image('bonus-food', '/assets/waste-diet.png');
+      this.load.image('plus-one', '/assets/plus-one.png');
+      this.load.image('plus-five', '/assets/plus-five.png');
+      this.load.image('plus-ten', '/assets/plus-ten.png');
     }
 
     function create() {
-      // hold a reference to this scene so we can pause/resume from React effects without recreating the game
       sceneRef.current = this;
       const { width, height } = this.scale;
 
@@ -67,7 +73,7 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
       grassLayer = this.add.tileSprite(0, 300, worldWidth, 200, 'grass').setOrigin(0).setDepth(-1);
       skyLayer = this.add.tileSprite(0, 0, worldWidth, 300, 'sky').setOrigin(0).setDepth(-1);
 
-      // Player (ensure spawn within physics bounds)
+      // Player 
       const topBound = this.physics.world.bounds.y;
       const safeY = Math.max(height / 2, topBound + 50);
       player = this.physics.add.sprite(width / 2, safeY, 'worm');
@@ -139,7 +145,7 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
     const dx = worldPoint.x - player.x;
     const dy = worldPoint.y - player.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    let foodDireciton = Math.random(1 ,0) == 1 ? -1:1; 
+    let foodDireciton = Math.random(1 ,0) === 1 ? -1:1; 
 
 
     if (distance > stopRadius) {
@@ -209,9 +215,9 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
       foodItem.setBounce(0.2);
 
       
-      if (food != "waste") {
+      if (food !== "waste") {
         bugFood.push(foodItem);
-        bugFoodDirection.push(Math.random(1 ,0) == 1 ? -1:1);
+        bugFoodDirection.push(Math.random(1 ,0) === 1 ? -1:1);
       }
       
       return foodItem;
@@ -229,6 +235,30 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
 
       if (this.onFoodCollected) {
         this.onFoodCollected();
+                
+        const pointsEarned = bugs[bugMap.get(food.texture.key)].points;
+        
+        if (pointsEarned === 1) {
+          const plusOne = this.add.sprite(player.x,player.y, "plus-one");
+          plusOne.setScale(.67);
+          this.tweens.add({
+            targets: plusOne,
+            alpha: 0,
+            duration: 1300,
+            y: '-=300',
+            onComplete: () => plusOne.destroy()
+          });
+        } else if (pointsEarned === 5) {
+            const plusFive = this.add.sprite(player.x,player.y, "plus-five");
+            plusFive.setScale(.67);
+            this.tweens.add({
+              targets: plusFive,
+              alpha: 0,
+              duration: 1300,
+              y: '-=300',
+              onComplete: () => plusFive.destroy()
+            });
+          }
       }
     }
 
@@ -299,6 +329,18 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
       if (this.onBonusCollected) {
         this.onBonusCollected(bonusValue);
       }
+        const plusTen = this.add.sprite(player.x,player.y, "plus-ten");
+        plusTen.setScale(.67);
+
+      this.tweens.add({
+        targets: plusTen,
+        alpha: 0,
+        duration: 1300,
+        y: '-=300',
+        onComplete: () => plusTen.destroy()
+      });
+
+
     }
 
 
