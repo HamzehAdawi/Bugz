@@ -16,8 +16,8 @@ const StartPlot = ({ onBack, dark, setDark }) => {
   const [streak, setStreak] = useState(0);
   const [bonus, setBonus] = useState(0);
 
-  const handleFoodCollected = () => {
-    setStreak(prevStreak => prevStreak + 1);
+  const handleFoodCollected = (points) => {
+    setStreak(prevStreak => prevStreak + points);
   };
 
   const handleBonusCollected = (bonusValue) => {
@@ -113,7 +113,11 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       </div>
       
       <div id='main-panel'>
-        <StartGame onFoodCollected={handleFoodCollected} onBonusCollected={handleBonusCollected} quitButton={showQuitModal} bug ={1}/>
+        <StartGame 
+          onFoodCollected={handleFoodCollected} 
+          onBonusCollected={handleBonusCollected} 
+          quitButton={showQuitModal} 
+          bug ={1}/>
       </div>
       <QuitConfirmationModal 
         isOpen={showQuitModal}
