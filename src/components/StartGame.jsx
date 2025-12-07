@@ -47,93 +47,94 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
   let bugFood = []; 
   let bugFoodDirection = [];
   let bonusSpawnTimer;
+  let streak =0; 
 
-    function preload() {
-      this.load.image('canvas', '/assets/dirt-plot.png');
-      this.load.spritesheet('worm', '/assets/worm-sprite.png', { frameWidth: 40, frameHeight: 35, });
-      this.load.image('grass', '/assets/grasflakes.png')
-      this.load.image('sky', '/assets/sky.png')
-      this.load.image('waste', '/assets/waste-diet.png');
-      this.load.image('bonus-food', '/assets/waste-diet.png');
-      this.load.image('plus-one', '/assets/plus-one.png');
-      this.load.image('plus-five', '/assets/plus-five.png');
-      this.load.image('plus-ten', '/assets/plus-ten.png');
+  function preload() {
+    this.load.image('canvas', '/assets/dirt-plot.png');
+    this.load.spritesheet('worm', '/assets/worm-sprite.png', { frameWidth: 40, frameHeight: 35, });
+    this.load.image('grass', '/assets/grasflakes.png')
+    this.load.image('sky', '/assets/sky.png')
+    this.load.image('waste', '/assets/waste-diet.png');
+    this.load.image('bonus-food', '/assets/waste-diet.png');
+    this.load.image('plus-one', '/assets/plus-one.png');
+    this.load.image('plus-five', '/assets/plus-five.png');
+    this.load.image('plus-ten', '/assets/plus-ten.png');
+  }
+
+  function create() {
+    sceneRef.current = this;
+    const { width, height } = this.scale;
+
+    this.input.setDefaultCursor('url(/assets/pointer.png), pointer');
+
+    this.physics.world.setBounds(0, 350, worldWidth, worldHeight);
+
+    // Background
+    background = this.add.tileSprite(0, 0, worldWidth, worldHeight, 'canvas').setOrigin(0).setDepth(-1);
+    grassLayer = this.add.tileSprite(0, 300, worldWidth, 200, 'grass').setOrigin(0).setDepth(-1);
+    skyLayer = this.add.tileSprite(0, 0, worldWidth, 300, 'sky').setOrigin(0).setDepth(-1);
+
+    // Player 
+    const topBound = this.physics.world.bounds.y;
+    const safeY = Math.max(height / 2, topBound + 50);
+    player = this.physics.add.sprite(width / 2, safeY, 'worm');
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+
+    // Camera setup
+    camera = this.cameras.main;
+    camera.setBounds(0, 0, worldWidth, worldHeight);
+    camera.startFollow(player, true, 1, 1, null, -110);
+
+    //FOOD
+    this.onFoodCollected = onFoodCollected;
+    this.onBonusCollected = onBonusCollected;
+    foodGroup = this.physics.add.group();
+    this.physics.add.overlap(player, foodGroup, collectFood, null, this);
+
+    // BONUS FOOD
+    bonusFoodGroup = this.physics.add.group();
+    this.physics.add.overlap(player, bonusFoodGroup, collectBonusFood, null, this);
+
+    bonusSpawnTimer = this.time.addEvent({
+      delay: Phaser.Math.Between(15000, 25000),
+      callback: () => {
+        spawnBonusFood.call(this);
+        // Reset timer with new random delay
+        bonusSpawnTimer.delay = Phaser.Math.Between(15000, 25000);
+      },
+      loop: true
+    });
+
+    //ENEMIES (TO-DO)
+
+    for (let i = 0; i < 15; i++) {
+      spawnFood();
     }
 
-    function create() {
-      sceneRef.current = this;
-      const { width, height } = this.scale;
+    // Animations
+    this.anims.create({
+      key: 'left',
+      frames: this.anims.generateFrameNumbers('worm', { start: 0, end: 3 }),
+      frameRate: 10,
+      repeat: -1,
+    });
 
-      this.input.setDefaultCursor('url(/assets/pointer.png), pointer');
+    this.anims.create({
+      key: 'turn',
+      frames: [{ key: 'worm', frame: 4 }],
+      frameRate: 20,
+    });
 
-      this.physics.world.setBounds(0, 350, worldWidth, worldHeight);
+    this.anims.create({
+      key: 'right',
+      frames: this.anims.generateFrameNumbers('worm', { start: 5, end: 8 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+  }
 
-      // Background
-      background = this.add.tileSprite(0, 0, worldWidth, worldHeight, 'canvas').setOrigin(0).setDepth(-1);
-      grassLayer = this.add.tileSprite(0, 300, worldWidth, 200, 'grass').setOrigin(0).setDepth(-1);
-      skyLayer = this.add.tileSprite(0, 0, worldWidth, 300, 'sky').setOrigin(0).setDepth(-1);
-
-      // Player 
-      const topBound = this.physics.world.bounds.y;
-      const safeY = Math.max(height / 2, topBound + 50);
-      player = this.physics.add.sprite(width / 2, safeY, 'worm');
-      player.setBounce(0.2);
-      player.setCollideWorldBounds(true);
-
-      // Camera setup
-      camera = this.cameras.main;
-      camera.setBounds(0, 0, worldWidth, worldHeight);
-      camera.startFollow(player, true, 1, 1, null, -110);
-
-      //FOOD
-      this.onFoodCollected = onFoodCollected;
-      this.onBonusCollected = onBonusCollected;
-      foodGroup = this.physics.add.group();
-      this.physics.add.overlap(player, foodGroup, collectFood, null, this);
-
-      // BONUS FOOD
-      bonusFoodGroup = this.physics.add.group();
-      this.physics.add.overlap(player, bonusFoodGroup, collectBonusFood, null, this);
-
-      bonusSpawnTimer = this.time.addEvent({
-        delay: Phaser.Math.Between(15000, 25000),
-        callback: () => {
-          spawnBonusFood.call(this);
-          // Reset timer with new random delay
-          bonusSpawnTimer.delay = Phaser.Math.Between(15000, 25000);
-        },
-        loop: true
-      });
-
-      //ENEMIES (TO-DO)
-
-      for (let i = 0; i < 15; i++) {
-        spawnFood();
-      }
-
-      // Animations
-      this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('worm', { start: 0, end: 3 }),
-        frameRate: 10,
-        repeat: -1,
-      });
-
-      this.anims.create({
-        key: 'turn',
-        frames: [{ key: 'worm', frame: 4 }],
-        frameRate: 20,
-      });
-
-      this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('worm', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1,
-      });
-    }
-
-   function update() {
+  function update() {
     if (!player) return;
 
     const pointer = this.input.activePointer;
@@ -145,7 +146,7 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
     const dx = worldPoint.x - player.x;
     const dy = worldPoint.y - player.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    let foodDireciton = Math.random(1 ,0) === 1 ? -1:1; 
+    let foodDirection = Math.random(1 ,0) === 1 ? -1:1; 
 
 
     if (distance > stopRadius) {
@@ -186,10 +187,17 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
 
       for (let i = 0; i < bugFood.length; i++) {
         const speed = bugs[bug].speed;
-        bugFood[i].x += (foodDireciton * speed * this.game.loop.delta / 1000); 
+        bugFood[i].x += (foodDirection * speed * this.game.loop.delta / 1000); 
 
         if (bugFood[i].x >= worldWidth +10 || bugFood[i].x <= -10) {
-          foodDireciton *= -1;
+          foodDirection *= -1;
+        }
+        if ( Math.abs(bugFood[i].x - player.x) <= 35 && Math.abs(bugFood[i].y - player.y) <= 35) {
+          if (player.x > bugFood[i].x && foodDirection > 0) {
+            foodDirection *= -1;
+          } else if (player.x < bugFood[i].x && foodDirection < 0) {
+            foodDirection *= -1;
+          }
         }
         if(bugFoodDirection >=1) {
           bugFood[i].anims.play('right', true);
@@ -197,151 +205,171 @@ function StartGame({ onFoodCollected, onBonusCollected, quitButton, bug}) {
           bugFood[i].anims.play('left', true);
         }
       }
-      
-    }
 
-    function spawnFood() {
-      if (!foodGroup) return;
-      const bounds = foodGroup.scene.physics.world.bounds;
-      const margin = 100;
-      const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
-      const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
-
-      const dietSize = 2;
-      const randomIndex = Math.floor(Math.random() * dietSize);
-
-      const food = bugs[bug].diet[randomIndex];
-      const foodItem = foodGroup.create(x, y, food);
-      foodItem.setBounce(0.2);
-
-      
-      if (food !== "waste") {
-        bugFood.push(foodItem);
-        bugFoodDirection.push(Math.random(1 ,0) === 1 ? -1:1);
+      if (streak >= 50) {
+        console.log("grow!!")
+        this.tweens.add({
+          targets: player,
+          scaleX: 2, 
+          scaleY: 2,
+          duration: 300, 
+          yoyo: false, 
+          repeat: 0, 
+          onComplete: () => {
+            // player.setScale = player.scale * 2;
+          }
+        });
       }
-      
-      return foodItem;
+    
+  }
+
+  function spawnFood() {
+    if (!foodGroup) return;
+    const bounds = foodGroup.scene.physics.world.bounds;
+    const margin = 100;
+    const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
+    const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
+
+    const dietSize = 2;
+    const randomIndex = Math.floor(Math.random() * dietSize);
+
+    const food = bugs[bug].diet[randomIndex];
+    const foodItem = foodGroup.create(x, y, food);
+    foodItem.setBounce(0.2);
+
+    
+    if (food !== "waste") {
+      bugFood.push(foodItem);
+      bugFoodDirection.push(Math.random(1 ,0) === 1 ? -1:1);
     }
+    
+    return foodItem;
+  }
 
-    function collectFood(player, food) {
-      if (!food || !foodGroup) return;
-      // Reuse the same food object to avoid growth/leaks
-      const bounds = foodGroup.scene.physics.world.bounds;
-      const margin = 40;
-      const newX = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
-      const newY = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
-      food.enableBody(true, newX, newY, true, true);
-      food.setBounce(0.2);
+  function collectFood(player, food) {
+    if (!food || !foodGroup) return;
+    // Reuse the same food object to avoid growth/leaks
+    const bounds = foodGroup.scene.physics.world.bounds;
+    const margin = 40;
+    const newX = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
+    const newY = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
+    food.enableBody(true, newX, newY, true, true);
+    food.setBounce(0.2);
 
-      if (this.onFoodCollected) {
-        this.onFoodCollected();
-                
-        const pointsEarned = bugs[bugMap.get(food.texture.key)].points;
-        
-        if (pointsEarned === 1) {
-          const plusOne = this.add.sprite(player.x,player.y, "plus-one");
-          plusOne.setScale(.67);
+    if (this.onFoodCollected) {                
+      const pointsEarned = bugs[bugMap.get(food.texture.key)].points;
+      
+      if (pointsEarned === 1) {
+        streak += 1;
+        console.log(streak);
+        this.onFoodCollected(1);
+        const plusOne = this.add.sprite(player.x,player.y, "plus-one");
+        plusOne.setScale(.67);
+        this.tweens.add({
+          targets: plusOne,
+          alpha: 0,
+          duration: 1300,
+          y: '-=300',
+          onComplete: () => plusOne.destroy()
+        });
+      } else if (pointsEarned === 5) {
+          streak += 5;
+          console.log(streak);
+          this.onFoodCollected(5);
+          const plusFive = this.add.sprite(player.x,player.y, "plus-five");
+          plusFive.setScale(.67);
           this.tweens.add({
-            targets: plusOne,
+            targets: plusFive,
             alpha: 0,
             duration: 1300,
             y: '-=300',
-            onComplete: () => plusOne.destroy()
+            onComplete: () => plusFive.destroy()
           });
-        } else if (pointsEarned === 5) {
-            const plusFive = this.add.sprite(player.x,player.y, "plus-five");
-            plusFive.setScale(.67);
-            this.tweens.add({
-              targets: plusFive,
-              alpha: 0,
-              duration: 1300,
-              y: '-=300',
-              onComplete: () => plusFive.destroy()
-            });
-          }
-      }
-    }
-
-    return () => {
-      if (gameRef.current) {
-        gameRef.current.destroy(true);
-        gameRef.current = null;
-      }
-      sceneRef.current = null;
-    };
-    function spawnBonusFood() {
-      if (!bonusFoodGroup || !this.physics) return;
-      
-      const bounds = this.physics.world.bounds;
-      const margin = 100;
-      const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
-      const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
-
-      const bonusFood = bonusFoodGroup.create(x, y, 'bonus-food');
-      bonusFood.setBounce(0.2);
-      bonusFood.setScale(1.5);
-      bonusFood.bonusValue = 10;
-
-      this.tweens.add({
-        targets: bonusFood,
-        alpha: 0.2,
-        duration: 300,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Sine.easeInOut'
-      });
-
-      this.tweens.add({
-        targets: bonusFood,
-        scaleX: 1.7,
-        scaleY: 1.7,
-        duration: 500,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Sine.easeInOut'
-      });
-
-      this.tweens.add({
-        targets: bonusFood,
-        angle: 360,
-        duration: 2000,
-        repeat: -1,
-        ease: 'Linear'
-      });
-
-      this.time.delayedCall(8000, () => {
-        if (bonusFood && bonusFood.active) {
-          this.tweens.killTweensOf(bonusFood);
-          bonusFood.destroy();
         }
-      });
-
-      return bonusFood;
     }
+  }
 
-    function collectBonusFood(player, bonusFood) {
-      if (!bonusFood || !bonusFoodGroup) return;
-      
-      const bonusValue = bonusFood.bonusValue || 10;
-      bonusFoodGroup.scene.tweens.killTweensOf(bonusFood);
-      bonusFood.destroy();
+  return () => {
+    if (gameRef.current) {
+      gameRef.current.destroy(true);
+      gameRef.current = null;
+    }
+    sceneRef.current = null;
+  };
 
-      if (this.onBonusCollected) {
-        this.onBonusCollected(bonusValue);
+  function spawnBonusFood() {
+    if (!bonusFoodGroup || !this.physics) return;
+    
+    const bounds = this.physics.world.bounds;
+    const margin = 100;
+    const x = Phaser.Math.Between(bounds.x + margin, bounds.right - margin);
+    const y = Phaser.Math.Between(bounds.y + margin, bounds.bottom - margin);
+
+    const bonusFood = bonusFoodGroup.create(x, y, 'bonus-food');
+    bonusFood.setBounce(0.2);
+    bonusFood.setScale(1.5);
+    bonusFood.bonusValue = 10;
+
+    this.tweens.add({
+      targets: bonusFood,
+      alpha: 0.2,
+      duration: 300,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut'
+    });
+
+    this.tweens.add({
+      targets: bonusFood,
+      scaleX: 1.7,
+      scaleY: 1.7,
+      duration: 500,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Sine.easeInOut'
+    });
+
+    this.tweens.add({
+      targets: bonusFood,
+      angle: 360,
+      duration: 2000,
+      repeat: -1,
+      ease: 'Linear'
+    });
+
+    this.time.delayedCall(8000, () => {
+      if (bonusFood && bonusFood.active) {
+        this.tweens.killTweensOf(bonusFood);
+        bonusFood.destroy();
       }
-        const plusTen = this.add.sprite(player.x,player.y, "plus-ten");
-        plusTen.setScale(.67);
+    });
 
-      this.tweens.add({
-        targets: plusTen,
-        alpha: 0,
-        duration: 1300,
-        y: '-=300',
-        onComplete: () => plusTen.destroy()
-      });
+    return bonusFood;
+  }
 
+  function collectBonusFood(player, bonusFood) {
+    if (!bonusFood || !bonusFoodGroup) return;
+    
+    const bonusValue = bonusFood.bonusValue || 10;
+    bonusFoodGroup.scene.tweens.killTweensOf(bonusFood);
+    bonusFood.destroy();
 
+    if (this.onBonusCollected) {
+      this.onBonusCollected(bonusValue);
     }
+      const plusTen = this.add.sprite(player.x,player.y, "plus-ten");
+      plusTen.setScale(.67);
+
+    this.tweens.add({
+      targets: plusTen,
+      alpha: 0,
+      duration: 1300,
+      y: '-=300',
+      onComplete: () => plusTen.destroy()
+    });
+
+
+  }
 
 
   }, []);
