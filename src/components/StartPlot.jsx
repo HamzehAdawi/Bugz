@@ -15,13 +15,15 @@ const StartPlot = ({ onBack, dark, setDark }) => {
   
   const [streak, setStreak] = useState(0);
   const [bonus, setBonus] = useState(0);
+  const capped = Math.min(streak, 200);        
+  const percent = (capped / 200) * 100;
 
   const handleFoodCollected = (points) => {
     setStreak(prevStreak => prevStreak + points);
   };
 
-  const handleBonusCollected = (bonusValue) => {
-    setBonus(prevBonus => prevBonus + bonusValue);
+  const handleBonusCollected = (bonusSelected) => {
+    setBonus(bonusSelected);
   };
 
   const handleQuitClick = () => {
@@ -101,7 +103,11 @@ const StartPlot = ({ onBack, dark, setDark }) => {
             <img src={require('../assets/heart.png')} alt="heart" />
           </div>
           <PlotPanelItem title="Bonuses" className="structure-container" />
-          <div className="panel-item-value">{bonus}</div>
+          <div className="panel-item-value">
+            {
+              bonus === "" ? "None":bonus === "bonus-speed" ? <img src={require('../assets/speed-boost.png') } alt="heart" />:"None" 
+            }
+          </div>
         </div>
       </div>
 
@@ -109,6 +115,16 @@ const StartPlot = ({ onBack, dark, setDark }) => {
       <div id="right-plot-panel">
         <div id='right-button-container'>
           <button className="green-button" id='back-menu-button' onClick={handleQuitClick}>Quit</button>
+          <div id='goal-container'>
+            <h2 id='goal-title'>Goal</h2>
+            <div id='goal-bar'>
+              <div id='goal-bar-fill' 
+                style={{
+                  height: `${percent}%`
+                }}  
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
       
