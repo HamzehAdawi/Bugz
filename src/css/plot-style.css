@@ -310,3 +310,35 @@ body {
     user-select: none;
     text-align: center;
 }
+
+#goal-container {
+    top: 100px;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+}
+
+#goal-title {
+    font-size: 3vw;
+    font-family: "Tiny5", sans-serif;
+    color: #3cb15d;
+    text-shadow: 0px 1px 4px #000000;
+}
+
+#goal-bar {
+    top: 200px;
+    width: 30px;
+    height: 1000px;
+    background-color: #3cb15d59;
+    left: 42%;
+    position: absolute;
+}
+
+#goal-bar-fill {
+    bottom: 0;
+    width: 30px;
+    height: 0%;
+    background-color: #3cb15d;
+    position: absolute;
+
+}
