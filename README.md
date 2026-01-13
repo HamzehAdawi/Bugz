@@ -28,7 +28,7 @@ Collect bonuses, maintain your streak, and stay alive as long as possible.
 Under construction
 
 
-## 🤝 Contributing
+## Contributing
 Contributions are very much welcome! 
 
 The purpose of this project was to learn more about topics surrounding: 
@@ -50,7 +50,7 @@ Thanks for your interest in contributing! ❤️
 - Follow existing formatting.
 - Write clear commit messages.
 
-Give a star if you enjoy ⭐
+Give a star if you enjoy 
 
 # Resources (Getting Started with Create React App)
 
