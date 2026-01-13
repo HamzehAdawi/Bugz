@@ -3,7 +3,7 @@
 
 Bugz is a small, Feeding Frenzy–inspired browser game where you play as a hungry garden creature trying to survive, grow, and climb the food chain. Eat smaller bugs, avoid bigger ones, and keep your garden ecosystem in balance!
 
-Contributions are very much welcome!  
+Contributions are very much welcome! The purpose behind this project is to learn / sharpen skills in React, Phaser game-engine, and Javascript more deeply. I encourage anyone curious about these topics to open a PR and contribute what they like to ultimately build something together :) 
 
 # Gameplay
 
